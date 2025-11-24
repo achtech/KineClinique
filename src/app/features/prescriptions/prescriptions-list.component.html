@@ -1,51 +1,90 @@
 <div class="toolbar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
   <span class="page-title" style="font-size: 1.5rem; font-weight: 500;">Ordonnances</span>
-  <button mat-raised-button color="primary" (click)="openCreate()">Nouveau</button>
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%; margin-top:12px;">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let e">{{e.id}}</td>
-  </ng-container>
 
-  <ng-container matColumnDef="patientId">
-    <th mat-header-cell *matHeaderCellDef>Patient</th>
-    <td mat-cell *matCellDef="let e">{{e.patientId}}</td>
-  </ng-container>
+<div class="filter-panel">
+  <div class="filter-panel-left">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Rechercher</mat-label>
+      <input matInput placeholder="Rechercher dans tous les champs" (keyup)="applyGlobalFilter($event)" [value]="globalFilter || ''">
+      <button mat-icon-button *ngIf="globalFilter" matSuffix (click)="applyGlobalFilter({ target: { value: '' } })" tabindex="-1">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="filter-panel-right">
+    <button mat-raised-button color="primary" (click)="openCreate()">Nouveau</button>
+  </div>
+</div>
 
-  <ng-container matColumnDef="prescriber">
-    <th mat-header-cell *matHeaderCellDef>Prescripteur</th>
-    <td mat-cell *matCellDef="let e">{{e.prescriber}}</td>
-  </ng-container>
+<div style="width:100%; margin-top:12px;">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width:100%;">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let e">{{e.id}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="sessionsPrescribed">
-    <th mat-header-cell *matHeaderCellDef>Séances prescrites</th>
-    <td mat-cell *matCellDef="let e">{{e.sessionsPrescribed}}</td>
-  </ng-container>
+    <ng-container matColumnDef="patientId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient</th>
+      <td mat-cell *matCellDef="let e">{{e.patientId}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="sessionsUsed">
-    <th mat-header-cell *matHeaderCellDef>Séances utilisées</th>
-    <td mat-cell *matCellDef="let e">{{e.sessionsUsed}}</td>
-  </ng-container>
+    <ng-container matColumnDef="prescriber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prescripteur</th>
+      <td mat-cell *matCellDef="let e">{{e.prescriber}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="createdAt">
-    <th mat-header-cell *matHeaderCellDef>Créé le</th>
-    <td mat-cell *matCellDef="let e">{{e.createdAt}}</td>
-  </ng-container>
+    <ng-container matColumnDef="sessionsPrescribed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Séances prescrites</th>
+      <td mat-cell *matCellDef="let e">{{e.sessionsPrescribed}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="documentUrl">
-    <th mat-header-cell *matHeaderCellDef>Document</th>
-    <td mat-cell *matCellDef="let e"><a *ngIf="e.documentUrl" [href]="e.documentUrl" target="_blank">Voir</a></td>
-  </ng-container>
+    <ng-container matColumnDef="sessionsUsed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Séances utilisées</th>
+      <td mat-cell *matCellDef="let e">{{e.sessionsUsed}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let e">
-      <button mat-icon-button (click)="openEdit(e)"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button color="warn" (click)="delete(e)"><mat-icon>delete</mat-icon></button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Créé le</th>
+      <td mat-cell *matCellDef="let e">{{e.createdAt}}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <ng-container matColumnDef="documentUrl">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Document</th>
+      <td mat-cell *matCellDef="let e"><a *ngIf="e.documentUrl" [href]="e.documentUrl" target="_blank">Voir</a></td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let e">
+        <button mat-icon-button (click)="openEdit(e)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="delete(e)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <thead>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="filter-row">
+        <th *ngFor="let col of displayedColumns">
+          <ng-container [ngSwitch]="col">
+            <ng-container *ngSwitchCase="'actions'">
+              <span></span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 0;">
+                <input matInput [placeholder]="columnPlaceholders[col] || col" (keyup)="applyColumnFilter(col, $event)" [value]="columnFilters[col] || ''">
+                <button mat-icon-button *ngIf="columnFilters[col]" matSuffix (click)="applyColumnFilter(col, { target: { value: '' } })" tabindex="-1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </tbody>
+  </table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>

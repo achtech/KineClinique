@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { PatientsListComponent } from './patients-list.component';
 import { PatientDialogDialogComponent } from './patient-dialog.component';
@@ -23,7 +25,9 @@ import { PatientDialogDialogComponent } from './patient-dialog.component';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [PatientsListComponent]
 })

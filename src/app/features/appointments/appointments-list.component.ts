@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,10 +11,11 @@ import { AppointmentDialogDialogComponent } from './appointment-dialog.component
   templateUrl: './appointments-list.component.html',
   styleUrls: ['./appointments-list.component.scss']
 })
-export class AppointmentsListComponent implements OnInit {
+export class AppointmentsListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'patientId', 'date', 'practitionerId', 'type', 'status', 'notes', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   globalFilter: string = '';
+  columnFilters: Record<string, string> = {};
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -23,6 +24,7 @@ export class AppointmentsListComponent implements OnInit {
   ngOnInit(){
     this.service.list().subscribe(d => {
       this.dataSource.data = d;
+      this.refreshFilters(false);
     });
   }
 
@@ -30,33 +32,74 @@ export class AppointmentsListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.paginator.pageSize = 10;
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      if (!filter) return true;
-      const search = filter.trim().toLowerCase();
-      return this.displayedColumns.some(col => {
-        if (col === 'actions') return false;
-        return (data[col] || '').toString().toLowerCase().includes(search);
-      });
+    this.dataSource.filterPredicate = (data: any) => {
+      return this.matchesGlobalFilter(data) && this.matchesColumnFilters(data);
     };
     this.dataSource.sortData = (data, sort) => {
       if (!sort.active || sort.direction === '') {
         return data;
       }
       return data.slice().sort((a, b) => {
-        const valueA = (a[sort.active] || '').toString().toLowerCase();
-        const valueB = (b[sort.active] || '').toString().toLowerCase();
+        const valueA = this.getNormalizedValue(a, sort.active);
+        const valueB = this.getNormalizedValue(b, sort.active);
         return (valueA < valueB ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
       });
     };
+    this.refreshFilters(false);
   }
 
   applyGlobalFilter(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.globalFilter = value;
-    this.dataSource.filter = value.trim().toLowerCase();
-    if (this.dataSource.paginator) {
+    this.globalFilter = (event.target as HTMLInputElement).value || '';
+    this.refreshFilters();
+  }
+
+  applyColumnFilter(column: string, event: Event) {
+    const value = (event.target as HTMLInputElement).value || '';
+    if (value.trim()) {
+      this.columnFilters = { ...this.columnFilters, [column]: value };
+    } else {
+      const { [column]: removed, ...rest } = this.columnFilters;
+      this.columnFilters = rest;
+    }
+    this.refreshFilters();
+  }
+
+  private refreshFilters(resetPaginator: boolean = true) {
+    this.dataSource.filter = `${Date.now()}`;
+    if (resetPaginator && this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  private matchesGlobalFilter(data: any): boolean {
+    const search = this.globalFilter.trim().toLowerCase();
+    if (!search) {
+      return true;
+    }
+    return this.displayedColumns.some(col => {
+      if (col === 'actions') {
+        return false;
+      }
+      return this.getNormalizedValue(data, col).includes(search);
+    });
+  }
+
+  private matchesColumnFilters(data: any): boolean {
+    return Object.entries(this.columnFilters).every(([column, value]) => {
+      const search = (value || '').trim().toLowerCase();
+      if (!search) {
+        return true;
+      }
+      return this.getNormalizedValue(data, column).includes(search);
+    });
+  }
+
+  private getNormalizedValue(row: any, column: string): string {
+    const value = row?.[column];
+    if (Array.isArray(value)) {
+      return value.join(', ').toLowerCase();
+    }
+    return value != null ? value.toString().toLowerCase() : '';
   }
 
   openCreate(){ this.dialog.open(AppointmentDialogDialogComponent, { width: '420px', data: { mode: 'create' } }); }

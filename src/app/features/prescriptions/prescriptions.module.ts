@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { PrescriptionsListComponent } from './prescriptions-list.component';
 import { PrescriptionDialogDialogComponent } from './prescription-dialog.component';
@@ -23,7 +25,9 @@ import { PrescriptionDialogDialogComponent } from './prescription-dialog.compone
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [PrescriptionsListComponent]
 })
