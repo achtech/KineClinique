@@ -1,8 +1,0 @@
-<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Créer' : 'Modifier' }}</h2>
-<mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%"><mat-label>PatientId</mat-label><input matInput formControlName="patientId"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Date</mat-label><input matInput formControlName="date"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>PractitionerId</mat-label><input matInput formControlName="practitionerId"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Type</mat-label><input matInput formControlName="type"></mat-form-field>\n      
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
-</mat-dialog-actions>

@@ -1,8 +1,0 @@
-<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Créer' : 'Modifier' }}</h2>
-<mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%"><mat-label>FirstName</mat-label><input matInput formControlName="firstName"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>LastName</mat-label><input matInput formControlName="lastName"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Dob</mat-label><input matInput formControlName="dob"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Email</mat-label><input matInput formControlName="email"></mat-form-field>\n      
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
-</mat-dialog-actions>
