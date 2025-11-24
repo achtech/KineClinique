@@ -1,0 +1,51 @@
+<div class="toolbar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+  <span class="page-title" style="font-size: 1.5rem; font-weight: 500;">Ordonnances</span>
+  <button mat-raised-button color="primary" (click)="openCreate()">Nouveau</button>
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%; margin-top:12px;">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let e">{{e.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="patientId">
+    <th mat-header-cell *matHeaderCellDef>Patient</th>
+    <td mat-cell *matCellDef="let e">{{e.patientId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="prescriber">
+    <th mat-header-cell *matHeaderCellDef>Prescripteur</th>
+    <td mat-cell *matCellDef="let e">{{e.prescriber}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sessionsPrescribed">
+    <th mat-header-cell *matHeaderCellDef>Séances prescrites</th>
+    <td mat-cell *matCellDef="let e">{{e.sessionsPrescribed}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sessionsUsed">
+    <th mat-header-cell *matHeaderCellDef>Séances utilisées</th>
+    <td mat-cell *matCellDef="let e">{{e.sessionsUsed}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef>Créé le</th>
+    <td mat-cell *matCellDef="let e">{{e.createdAt}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="documentUrl">
+    <th mat-header-cell *matHeaderCellDef>Document</th>
+    <td mat-cell *matCellDef="let e"><a *ngIf="e.documentUrl" [href]="e.documentUrl" target="_blank">Voir</a></td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let e">
+      <button mat-icon-button (click)="openEdit(e)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="delete(e)"><mat-icon>delete</mat-icon></button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

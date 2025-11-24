@@ -1,0 +1,94 @@
+<!-- TOP BAR -->
+<mat-toolbar color="primary" class="top-toolbar">
+  <span class="app-name">The Moroccan Physio</span>
+  <span style="flex: 1 1 auto;"></span>
+
+  <!-- Notifications Menu -->
+  <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" aria-label="Notifications">
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <mat-menu #notificationsMenu="matMenu">
+    <div style="padding: 16px; min-width: 180px; text-align: center; color: #c2185b;">
+      <mat-icon style="font-size: 32px; color: #c2185b;">notifications_off</mat-icon>
+      <div style="margin-top: 8px;">Aucune notification pour le moment</div>
+    </div>
+  </mat-menu>
+
+  <!-- Translation Menu -->
+  <button mat-icon-button [matMenuTriggerFor]="translationMenu" aria-label="Translation">
+    <mat-icon>translate</mat-icon>
+  </button>
+  <mat-menu #translationMenu="matMenu">
+    <button mat-menu-item>
+      <span style="margin-right:8px;">🇲🇦</span> العربية
+    </button>
+    <button mat-menu-item>
+      <span style="margin-right:8px;">🇫🇷</span> Français
+    </button>
+    <button mat-menu-item>
+      <span style="margin-right:8px;">🇬🇧</span> English
+    </button>
+    <button mat-menu-item>
+      <span style="margin-right:8px;">🇪🇸</span> Español
+    </button>
+  </mat-menu>
+
+  <!-- Profile Menu -->
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="Profile">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span style="margin-left:8px;">Paramètres</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span style="margin-left:8px;">Déconnexion</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+  
+  <!-- LEFT SIDE MENU -->
+  <mat-nav-list class="side-menu">
+    <a mat-list-item routerLink="/patients" routerLinkActive="active-menu">
+      <mat-icon>users</mat-icon>
+      <span>Patients</span>
+    </a>
+
+    <a mat-list-item routerLink="/appointments" routerLinkActive="active-menu">
+      <mat-icon>event</mat-icon>
+      <span>Rendez-vous</span>
+    </a>
+
+    <a mat-list-item routerLink="/sessions" routerLinkActive="active-menu">
+      <mat-icon>fitness_center</mat-icon>
+      <span>Séances</span>
+    </a>
+
+    <a mat-list-item routerLink="/prescriptions" routerLinkActive="active-menu">
+      <mat-icon>description</mat-icon>
+      <span>Ordonnances</span>
+    </a>
+
+    <a mat-list-item routerLink="/billing" routerLinkActive="active-menu">
+      <mat-icon>receipt</mat-icon>
+      <span>Facturation</span>
+    </a>
+
+    <a mat-list-item routerLink="/staff" routerLinkActive="active-menu">
+      <mat-icon>group</mat-icon>
+      <span>Personnel</span>
+    </a>
+
+  </mat-nav-list>
+
+  <!-- CENTER CONTENT -->
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
