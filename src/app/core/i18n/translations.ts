@@ -94,6 +94,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.confirmDelete': 'Are you sure you want to delete this item?',
     'common.cancel': 'Cancel',
     'common.save': 'Save',
+    'common.edit': 'Edit',
     'common.delete': 'Delete',
     'common.download': 'Download',
 
@@ -192,6 +193,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.confirmDelete': 'Êtes-vous sûr de vouloir supprimer cet élément ?',
     'common.cancel': 'Annuler',
     'common.save': 'Sauvegarder',
+    'common.edit': 'Modifier',
     'common.delete': 'Supprimer',
     'common.download': 'Télécharger',
 
@@ -288,6 +290,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.confirmDelete': '¿Está seguro de que desea eliminar este elemento?',
     'common.cancel': 'Cancelar',
     'common.save': 'Guardar',
+    'common.edit': 'Editar',
     'common.delete': 'Eliminar',
     'common.download': 'Descargar',
 
@@ -384,6 +387,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.confirmDelete': 'هل أنت متأكد أنك تريد حذف هذا العنصر؟',
     'common.cancel': 'إلغاء',
     'common.save': 'حفظ',
+    'common.edit': 'تعديل',
     'common.delete': 'حذف',
     'common.download': 'تنزيل',
 
