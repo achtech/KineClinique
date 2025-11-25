@@ -6,10 +6,16 @@
     <mat-label>{{ 'sessions.columns.patient' | translate }}</mat-label>
     <input matInput formControlName="patientId">
   </mat-form-field>
+
   <mat-form-field style="width:100%">
     <mat-label>{{ 'sessions.columns.date' | translate }}</mat-label>
-    <input matInput formControlName="date">
+    <input matInput [matDatepicker]="sessionPicker" formControlName="date" readonly>
+    <mat-datepicker-toggle matSuffix [for]="sessionPicker">
+      <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #sessionPicker></mat-datepicker>
   </mat-form-field>
+
   <mat-form-field style="width:100%">
     <mat-label>{{ 'sessions.columns.practitioner' | translate }}</mat-label>
     <input matInput formControlName="practitionerId">

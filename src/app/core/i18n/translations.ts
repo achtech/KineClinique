@@ -12,6 +12,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.prescriptions': 'Prescriptions',
     'nav.billing': 'Billing',
     'nav.staff': 'Staff',
+    'nav.agenda': 'Agenda',
 
     // Staff
     'staff.list.title': 'Staff',
@@ -98,6 +99,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.delete': 'Delete',
     'common.download': 'Download',
 
+    // Agenda
+    'agenda.view.day': 'Day',
+    'agenda.view.week': 'Week',
+    'agenda.view.month': 'Month',
+    'agenda.newSession': 'New session',
+
     // Toolbar & profile
     'toolbar.notifications.empty': 'No notifications',
     'toolbar.translation.ariaLabel': 'Change language',
@@ -118,6 +125,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.prescriptions': 'Ordonnances',
     'nav.billing': 'Facturation',
     'nav.staff': 'Personnel',
+    'nav.agenda': 'Agenda',
 
     'staff.list.title': 'Personnel',
     'staff.columns.id': 'ID',
@@ -197,6 +205,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.delete': 'Supprimer',
     'common.download': 'Télécharger',
 
+    // Agenda
+    'agenda.view.day': 'Jour',
+    'agenda.view.week': 'Semaine',
+    'agenda.view.month': 'Mois',
+    'agenda.newSession': 'Nouvelle séance',
+
     'toolbar.notifications.empty': 'Aucune notification',
     'toolbar.translation.ariaLabel': 'Changer de langue',
     'toolbar.profile.settings': 'Paramètres',
@@ -215,6 +229,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.prescriptions': 'Prescripciones',
     'nav.billing': 'Facturación',
     'nav.staff': 'Personal',
+    'nav.agenda': 'Agenda',
 
     'staff.list.title': 'Personal',
     'staff.columns.id': 'ID',
@@ -294,6 +309,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.delete': 'Eliminar',
     'common.download': 'Descargar',
 
+    // Agenda
+    'agenda.view.day': 'Día',
+    'agenda.view.week': 'Semana',
+    'agenda.view.month': 'Mes',
+    'agenda.newSession': 'Nueva sesión',
+
     'toolbar.notifications.empty': 'Sin notificaciones',
     'toolbar.translation.ariaLabel': 'Cambiar idioma',
     'toolbar.profile.settings': 'Configuración',
@@ -312,6 +333,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.prescriptions': 'الوصفات',
     'nav.billing': 'الفوترة',
     'nav.staff': 'الموظفون',
+    'nav.agenda': 'الأجندة',
 
     'staff.list.title': 'الموظفون',
     'staff.columns.id': 'المعرف',
@@ -390,6 +412,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.edit': 'تعديل',
     'common.delete': 'حذف',
     'common.download': 'تنزيل',
+
+    // Agenda
+    'agenda.view.day': 'يوم',
+    'agenda.view.week': 'أسبوع',
+    'agenda.view.month': 'شهر',
+    'agenda.newSession': 'جلسة جديدة',
 
     'toolbar.notifications.empty': 'لا توجد إشعارات',
     'toolbar.translation.ariaLabel': 'تغيير اللغة',

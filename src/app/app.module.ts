@@ -26,6 +26,7 @@ import { SessionsModule } from './features/sessions/sessions.module';
 import { PrescriptionsModule } from './features/prescriptions/prescriptions.module';
 import { StaffModule } from './features/staff/staff.module';
 import { BillingModule } from './features/billing/billing.module';
+import { AgendaModule } from './features/agenda/agenda.module';
 
 import { LoginComponent } from './features/auth/login.component';
 import { ResetPasswordComponent } from './features/auth/reset-password.component';
@@ -56,7 +57,8 @@ import { ResetPasswordComponent } from './features/auth/reset-password.component
     SessionsModule,
     PrescriptionsModule,
     StaffModule,
-    BillingModule
+    BillingModule,
+    AgendaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

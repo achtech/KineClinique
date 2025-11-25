@@ -6,6 +6,7 @@ import { SessionsListComponent } from './features/sessions/sessions-list.compone
 import { PrescriptionsListComponent } from './features/prescriptions/prescriptions-list.component';
 import { StaffListComponent } from './features/staff/staff-list.component';
 import { BillingListComponent } from './features/billing/billing-list.component';
+import { AgendaComponent } from './features/agenda/agenda.module';
 import { LoginComponent } from './features/auth/login.component';
 import { ResetPasswordComponent } from './features/auth/reset-password.component';
 import { AuthGuard } from './core/guards/auth.guard';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'prescriptions', component: PrescriptionsListComponent, canActivate: [AuthGuard] },
   { path: 'staff', component: StaffListComponent, canActivate: [AuthGuard] },
   { path: 'billing', component: BillingListComponent, canActivate: [AuthGuard] },
+  { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];
 
