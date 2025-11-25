@@ -23,7 +23,7 @@ export class AppComponent {
     private authService: AuthService
   ) {
     this.direction$ = this.translationService.language$.pipe(
-      map(lang => this.translationService.getDirection(lang))
+      map(lang => this.translationService.getDirection(lang as LanguageCode))
     );
 
     this.router.events.pipe(
