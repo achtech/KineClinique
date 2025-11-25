@@ -1,4 +1,4 @@
-/* Restore original styles for pink theme */
+/* Theme-aware layout styles. Uses --app-primary and --app-on-primary variables set at runtime. */
 
 .login-app-shell {
   min-height: 100vh;
@@ -19,7 +19,7 @@
 .big-title {
   font-size: 3rem;
   font-weight: 800;
-  color: #c2185b;
+  color: var(--app-primary);
   letter-spacing: 2px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -31,49 +31,52 @@
   align-items: flex-start;
 }
 
-/* Main app layout styles */
+/* Main app layout styles - switched to use runtime CSS variables so the selected color replaces pink */
 .top-toolbar,
 .mat-toolbar,
 .mat-toolbar.mat-primary {
-  background: linear-gradient(90deg, #c2185b, 0%, #f06292, 100%);
-  color: #fff;
-  border-bottom: 1px solid #eee;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 .top-toolbar .mat-icon,
 .mat-toolbar .mat-icon {
-  color: #fff !important;
+  color: var(--app-on-primary) !important;
 }
 
+/* Side menu uses the primary color as background */
 .side-menu,
 .mat-nav-list,
 .mat-list-base {
-  background: linear-gradient(180deg, #c2185b 0%, #f06292 100%);
-  color: #fff;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary);
   min-width: 220px;
   max-width: 240px;
   height: 100vh;
   padding-top: 16px;
 }
 
+/* Menu items and icons should contrast with the primary background */
 .side-menu a,
 .mat-list-item,
 .mat-list-item .mat-list-text,
 .side-menu .mat-icon {
-  color: #c2185b !important;
+  color: var(--app-on-primary) !important;
 }
 
+/* Active menu: slightly lighter background to indicate selection while keeping readable text */
 .side-menu a.active-menu {
-  background: #fde7ef !important;
-  color: #c2185b !important; /* Match the pink of the "New" button */
+  background: rgba(255,255,255,0.12) !important;
+  color: var(--app-on-primary) !important;
   font-weight: 700;
 }
 
-/* Ensure all text and icons in the active menu are pink and bold */
+/* Ensure all text and icons in the active menu are styled consistently */
 .side-menu a.active-menu .mat-list-text,
 .side-menu a.active-menu span,
 .side-menu a.active-menu .mat-icon {
-  color: #c2185b !important;
+  color: var(--app-on-primary) !important;
   font-weight: 700;
 }
 
@@ -87,11 +90,12 @@
 }
 
 .side-menu .mat-icon {
-  color: #fff !important;
+  color: var(--app-on-primary) !important;
   font-size: 1.6rem !important;
   margin-right: 10px;
 }
 
+/* Layout and container */
 .layout {
   display: flex;
   flex-direction: row;

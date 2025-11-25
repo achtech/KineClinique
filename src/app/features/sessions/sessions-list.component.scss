@@ -29,7 +29,7 @@
   max-width: 400px;
   font-size: 1.2rem;
   padding: 12px 16px;
-  border: 1.5px solid #c2185b;
+  border: 1.5px solid var(--app-primary);
   border-radius: 5px;
   margin-right: 12px;
 }
@@ -39,8 +39,8 @@
   font-size: 1.15rem !important;
   padding: 14px 32px !important;
   border-radius: 5px !important;
-  background: #c2185b !important;
-  color: #fff !important;
+  background: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   margin-left: 12px;
@@ -60,7 +60,7 @@ th, .mat-form-field {
   margin-bottom: 16px;
 }
 
-/* Fix table style for pink theme */
+/* Table styles (theme-aware) */
 .sessions-table,
 .mat-table {
   background: #fff !important;
@@ -69,8 +69,8 @@ th, .mat-form-field {
 
 .sessions-table th,
 .mat-header-cell {
-  background: #fde7ef !important;
-  color: #c2185b !important;
+  background: var(--app-primary-bg) !important;
+  color: var(--app-primary) !important;
   font-weight: bold;
 }
 
@@ -88,7 +88,7 @@ th, .mat-form-field {
 
 .sessions-table .mat-header-row,
 .mat-header-row {
-  background: #fde7ef !important;
-  color: #c2185b !important;
+  background: var(--app-primary-bg) !important;
+  color: var(--app-primary) !important;
   font-weight: bold;
 }

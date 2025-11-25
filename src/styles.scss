@@ -1,5 +1,11 @@
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
+:root {
+  /* Application theme variable (updated at runtime by ThemeComponent) */
+  --app-primary: #c2185b; /* default pink */
+  --app-on-primary: #ffffff;
+}
+
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
@@ -7,15 +13,62 @@ body {
   color: #222;
 }
 
-/* Restore default link color */
-a, a:visited, a:active {
-  color: #c2185b;
-  text-decoration: underline;
+/* Make focus outlines use the current app primary color */
+*:focus {
+  outline: 2px solid var(--app-primary);
 }
 
-/* Restore focus outline */
-*:focus {
-  outline: 2px solid #c2185b;
+/* Toolbar and primary buttons should reflect the chosen primary color.
+   Force overrides for background-image and background so Material's prebuilt
+   theme gradients don't hide the CSS variable. */
+.mat-toolbar.mat-primary {
+  background-image: none !important;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Buttons that use color="primary" - override wrapper rules too */
+.mat-raised-button.mat-primary,
+.mat-flat-button.mat-primary,
+.mat-stroked-button.mat-primary,
+button.mat-button.mat-primary,
+button[color="primary"] {
+  background-image: none !important;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+  border-color: var(--app-primary) !important;
+}
+
+/* For buttons where Material applies the color on an inner .mat-button-wrapper */
+.mat-raised-button.mat-primary .mat-button-wrapper,
+.mat-flat-button.mat-primary .mat-button-wrapper,
+.mat-stroked-button.mat-primary .mat-button-wrapper {
+  background-image: none !important;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Ensure icons in toolbar and buttons use the on-primary color for contrast */
+.mat-toolbar.mat-primary .mat-icon,
+.mat-toolbar.mat-primary button.mat-icon-button,
+.mat-toolbar.mat-primary .mat-button,
+button.mat-primary .mat-icon,
+.mat-raised-button.mat-primary .mat-icon {
+  color: var(--app-on-primary) !important;
+}
+
+/* Make primary icon color consistent where appropriate (e.g., active menu) */
+.side-menu a.active-menu .mat-icon,
+.side-menu a.active-menu .mat-list-text,
+.side-menu a.active-menu span {
+  color: var(--app-primary) !important;
+  font-weight: 700;
+}
+
+/* Links / accents */
+a, a:visited, a:active {
+  color: var(--app-primary);
+  text-decoration: underline;
 }
 
 /* Restore default scrollbars */
@@ -26,3 +79,11 @@ a, a:visited, a:active {
 ::-webkit-scrollbar-thumb {
   background: #bbb;
 }
+
+/* Ensure any element using the app primary variable gets the expected contrast when used as text color */
+.text-on-primary {
+  color: var(--app-on-primary) !important;
+  background: var(--app-primary) !important;
+}
+
+/* Keep any previously added 'pink theme' related tweaks minimal but allow the JS theme to override visually */

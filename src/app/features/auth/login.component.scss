@@ -14,7 +14,7 @@
 .login-container h2 {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #c2185b;
+  color: var(--app-primary);
   margin-bottom: 32px;
 }
 
@@ -28,7 +28,7 @@
 
 .login-container label {
   font-size: 1.1rem;
-  color: #c2185b;
+  color: var(--app-primary);
   margin-bottom: 8px;
 }
 
@@ -39,7 +39,7 @@
   max-width: 400px;
   font-size: 1.2rem;
   padding: 12px 16px;
-  border: 1.5px solid #c2185b;
+  border: 1.5px solid var(--app-primary);
   border-radius: 5px;
   margin-bottom: 18px;
 }
@@ -48,8 +48,8 @@
   font-size: 1.15rem;
   padding: 14px 32px;
   border-radius: 6px;
-  background: #c2185b;
-  color: #fff;
+  background: var(--app-primary);
+  color: var(--app-on-primary);
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   border: none;
@@ -70,7 +70,7 @@
 }
 
 .forgot-password a {
-  color: #c2185b;
+  color: var(--app-primary);
   font-size: 1.1rem;
   text-decoration: underline;
   cursor: pointer;
