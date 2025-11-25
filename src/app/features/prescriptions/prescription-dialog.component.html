@@ -1,8 +1,21 @@
-<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Créer' : 'Modifier' }}</h2>
+<h2 mat-dialog-title>
+  {{ data.mode === 'create' ? ('prescriptions.dialog.createTitle' | translate) : ('prescriptions.dialog.editTitle' | translate) }}
+</h2>
 <mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%"><mat-label>PatientId</mat-label><input matInput formControlName="patientId"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Prescriber</mat-label><input matInput formControlName="prescriber"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>SessionsPrescribed</mat-label><input matInput formControlName="sessionsPrescribed"></mat-form-field>\n      
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'prescriptions.columns.patient' | translate }}</mat-label>
+    <input matInput formControlName="patientId">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'prescriptions.columns.prescriber' | translate }}</mat-label>
+    <input matInput formControlName="prescriber">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'prescriptions.columns.sessionsPrescribed' | translate }}</mat-label>
+    <input matInput formControlName="sessionsPrescribed">
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
+  <button mat-button (click)="dialogRef.close()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'common.save' | translate }}</button>
 </mat-dialog-actions>

@@ -20,6 +20,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'staff.columns.lastName': 'Last name',
     'staff.columns.role': 'Role',
     'staff.columns.email': 'Email',
+    'staff.dialog.createTitle': 'Create Staff',
+    'staff.dialog.editTitle': 'Edit Staff',
 
     // Appointments
     'appointments.list.title': 'Appointments',
@@ -30,6 +32,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'appointments.columns.type': 'Type',
     'appointments.columns.status': 'Status',
     'appointments.columns.notes': 'Notes',
+    'appointments.dialog.createTitle': 'Create Appointment',
+    'appointments.dialog.editTitle': 'Edit Appointment',
 
     // Billing
     'billing.list.title': 'Billing',
@@ -39,6 +43,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'billing.columns.date': 'Date',
     'billing.columns.status': 'Status',
     'billing.columns.notes': 'Notes',
+    'billing.dialog.createTitle': 'Create Billing',
+    'billing.dialog.editTitle': 'Edit Billing',
 
     // Patients
     'patients.list.title': 'Patients',
@@ -52,6 +58,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Allergies',
     'patients.columns.medicalHistory': 'Medical history',
     'patients.columns.createdAt': 'Created at',
+    'patients.dialog.createTitle': 'Create Patient',
+    'patients.dialog.editTitle': 'Edit Patient',
 
     // Prescriptions
     'prescriptions.list.title': 'Prescriptions',
@@ -62,6 +70,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'prescriptions.columns.sessionsUsed': 'Sessions used',
     'prescriptions.columns.createdAt': 'Created at',
     'prescriptions.columns.document': 'Document',
+    'prescriptions.dialog.createTitle': 'Create Prescription',
+    'prescriptions.dialog.editTitle': 'Edit Prescription',
 
     // Sessions
     'sessions.list.title': 'Sessions',
@@ -71,6 +81,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'sessions.columns.type': 'Type',
     'sessions.columns.practitioner': 'Practitioner',
     'sessions.columns.notes': 'Notes',
+    'sessions.dialog.createTitle': 'Create Session',
+    'sessions.dialog.editTitle': 'Edit Session',
 
     // Common
     'common.searchLabel': 'Search',
@@ -79,6 +91,9 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.actions': 'Actions',
     'common.view': 'View',
     'common.confirmDelete': 'Are you sure you want to delete this item?',
+    'common.cancel': 'Cancel',
+    'common.save': 'Save',
+    'common.delete': 'Delete',
 
     // Toolbar & profile
     'toolbar.notifications.empty': 'No notifications',
@@ -107,6 +122,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'staff.columns.lastName': 'Nom',
     'staff.columns.role': 'Rôle',
     'staff.columns.email': 'Email',
+    'staff.dialog.createTitle': 'Créer un membre du personnel',
+    'staff.dialog.editTitle': 'Modifier le personnel',
 
     'appointments.list.title': 'Rendez-vous',
     'appointments.columns.id': 'ID',
@@ -116,6 +133,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'appointments.columns.type': 'Type',
     'appointments.columns.status': 'Statut',
     'appointments.columns.notes': 'Notes',
+    'appointments.dialog.createTitle': 'Créer un rendez-vous',
+    'appointments.dialog.editTitle': 'Modifier le rendez-vous',
 
     'billing.list.title': 'Facturation',
     'billing.columns.id': 'ID',
@@ -124,6 +143,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'billing.columns.date': 'Date',
     'billing.columns.status': 'Statut',
     'billing.columns.notes': 'Notes',
+    'billing.dialog.createTitle': 'Créer une facture',
+    'billing.dialog.editTitle': 'Modifier la facture',
 
     'patients.list.title': 'Patients',
     'patients.columns.id': 'ID',
@@ -136,6 +157,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Allergies',
     'patients.columns.medicalHistory': 'Antécédents médicaux',
     'patients.columns.createdAt': 'Créé le',
+    'patients.dialog.createTitle': 'Créer un patient',
+    'patients.dialog.editTitle': 'Modifier le patient',
 
     'prescriptions.list.title': 'Ordonnances',
     'prescriptions.columns.id': 'ID',
@@ -145,6 +168,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'prescriptions.columns.sessionsUsed': 'Séances utilisées',
     'prescriptions.columns.createdAt': 'Créé le',
     'prescriptions.columns.document': 'Document',
+    'prescriptions.dialog.createTitle': 'Créer une ordonnance',
+    'prescriptions.dialog.editTitle': 'Modifier l\'ordonnance',
 
     'sessions.list.title': 'Séances',
     'sessions.columns.id': 'ID',
@@ -153,6 +178,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'sessions.columns.type': 'Type',
     'sessions.columns.practitioner': 'Praticien',
     'sessions.columns.notes': 'Notes',
+    'sessions.dialog.createTitle': 'Créer une séance',
+    'sessions.dialog.editTitle': 'Modifier la séance',
 
     'common.searchLabel': 'Rechercher',
     'common.searchPlaceholder': 'Rechercher dans tous les champs',
@@ -160,6 +187,9 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.actions': 'Actions',
     'common.view': 'Voir',
     'common.confirmDelete': 'Êtes-vous sûr de vouloir supprimer cet élément ?',
+    'common.cancel': 'Annuler',
+    'common.save': 'Sauvegarder',
+    'common.delete': 'Supprimer',
 
     'toolbar.notifications.empty': 'Aucune notification',
     'toolbar.translation.ariaLabel': 'Changer de langue',
@@ -186,6 +216,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'staff.columns.lastName': 'Apellido',
     'staff.columns.role': 'Rol',
     'staff.columns.email': 'Correo',
+    'staff.dialog.createTitle': 'Crear personal',
+    'staff.dialog.editTitle': 'Editar personal',
 
     'appointments.list.title': 'Citas',
     'appointments.columns.id': 'ID',
@@ -195,6 +227,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'appointments.columns.type': 'Tipo',
     'appointments.columns.status': 'Estado',
     'appointments.columns.notes': 'Notas',
+    'appointments.dialog.createTitle': 'Crear cita',
+    'appointments.dialog.editTitle': 'Editar cita',
 
     'billing.list.title': 'Facturación',
     'billing.columns.id': 'ID',
@@ -203,6 +237,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'billing.columns.date': 'Fecha',
     'billing.columns.status': 'Estado',
     'billing.columns.notes': 'Notas',
+    'billing.dialog.createTitle': 'Crear factura',
+    'billing.dialog.editTitle': 'Editar factura',
 
     'patients.list.title': 'Pacientes',
     'patients.columns.id': 'ID',
@@ -215,6 +251,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Alergias',
     'patients.columns.medicalHistory': 'Historial médico',
     'patients.columns.createdAt': 'Creado el',
+    'patients.dialog.createTitle': 'Crear paciente',
+    'patients.dialog.editTitle': 'Editar paciente',
 
     'prescriptions.list.title': 'Prescripciones',
     'prescriptions.columns.id': 'ID',
@@ -224,6 +262,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'prescriptions.columns.sessionsUsed': 'Sesiones usadas',
     'prescriptions.columns.createdAt': 'Creado el',
     'prescriptions.columns.document': 'Documento',
+    'prescriptions.dialog.createTitle': 'Crear prescripción',
+    'prescriptions.dialog.editTitle': 'Editar prescripción',
 
     'sessions.list.title': 'Sesiones',
     'sessions.columns.id': 'ID',
@@ -232,6 +272,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'sessions.columns.type': 'Tipo',
     'sessions.columns.practitioner': 'Profesional',
     'sessions.columns.notes': 'Notas',
+    'sessions.dialog.createTitle': 'Crear sesión',
+    'sessions.dialog.editTitle': 'Editar sesión',
 
     'common.searchLabel': 'Buscar',
     'common.searchPlaceholder': 'Buscar en todos los campos',
@@ -239,6 +281,9 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.actions': 'Acciones',
     'common.view': 'Ver',
     'common.confirmDelete': '¿Está seguro de que desea eliminar este elemento?',
+    'common.cancel': 'Cancelar',
+    'common.save': 'Guardar',
+    'common.delete': 'Eliminar',
 
     'toolbar.notifications.empty': 'Sin notificaciones',
     'toolbar.translation.ariaLabel': 'Cambiar idioma',
@@ -265,6 +310,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'staff.columns.lastName': 'اسم العائلة',
     'staff.columns.role': 'الدور',
     'staff.columns.email': 'البريد الإلكتروني',
+    'staff.dialog.createTitle': 'إضافة موظف',
+    'staff.dialog.editTitle': 'تعديل الموظف',
 
     'appointments.list.title': 'المواعيد',
     'appointments.columns.id': 'المعرف',
@@ -274,6 +321,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'appointments.columns.type': 'النوع',
     'appointments.columns.status': 'الحالة',
     'appointments.columns.notes': 'ملاحظات',
+    'appointments.dialog.createTitle': 'إضافة موعد',
+    'appointments.dialog.editTitle': 'تعديل الموعد',
 
     'billing.list.title': 'الفوترة',
     'billing.columns.id': 'المعرف',
@@ -282,6 +331,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'billing.columns.date': 'التاريخ',
     'billing.columns.status': 'الحالة',
     'billing.columns.notes': 'ملاحظات',
+    'billing.dialog.createTitle': 'إضافة فاتورة',
+    'billing.dialog.editTitle': 'تعديل الفاتورة',
 
     'patients.list.title': 'المرضى',
     'patients.columns.id': 'المعرف',
@@ -294,6 +345,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'الحساسيات',
     'patients.columns.medicalHistory': 'التاريخ الطبي',
     'patients.columns.createdAt': 'تاريخ الإنشاء',
+    'patients.dialog.createTitle': 'إضافة مريض',
+    'patients.dialog.editTitle': 'تعديل المريض',
 
     'prescriptions.list.title': 'الوصفات',
     'prescriptions.columns.id': 'المعرف',
@@ -303,6 +356,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'prescriptions.columns.sessionsUsed': 'الجلسات المستخدمة',
     'prescriptions.columns.createdAt': 'تاريخ الإنشاء',
     'prescriptions.columns.document': 'المستند',
+    'prescriptions.dialog.createTitle': 'إضافة وصفة',
+    'prescriptions.dialog.editTitle': 'تعديل الوصفة',
 
     'sessions.list.title': 'الجلسات',
     'sessions.columns.id': 'المعرف',
@@ -311,6 +366,8 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'sessions.columns.type': 'النوع',
     'sessions.columns.practitioner': 'المعالج',
     'sessions.columns.notes': 'ملاحظات',
+    'sessions.dialog.createTitle': 'إضافة جلسة',
+    'sessions.dialog.editTitle': 'تعديل الجلسة',
 
     'common.searchLabel': 'بحث',
     'common.searchPlaceholder': 'ابحث في جميع الحقول',
@@ -318,6 +375,9 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.actions': 'إجراءات',
     'common.view': 'عرض',
     'common.confirmDelete': 'هل أنت متأكد أنك تريد حذف هذا العنصر؟',
+    'common.cancel': 'إلغاء',
+    'common.save': 'حفظ',
+    'common.delete': 'حذف',
 
     'toolbar.notifications.empty': 'لا توجد إشعارات',
     'toolbar.translation.ariaLabel': 'تغيير اللغة',

@@ -1,8 +1,25 @@
-<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Créer' : 'Modifier' }}</h2>
+<h2 mat-dialog-title>
+  {{ data.mode === 'create' ? ('sessions.dialog.createTitle' | translate) : ('sessions.dialog.editTitle' | translate) }}
+</h2>
 <mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%"><mat-label>PatientId</mat-label><input matInput formControlName="patientId"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Date</mat-label><input matInput formControlName="date"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>PractitionerId</mat-label><input matInput formControlName="practitionerId"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Type</mat-label><input matInput formControlName="type"></mat-form-field>\n      
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'sessions.columns.patient' | translate }}</mat-label>
+    <input matInput formControlName="patientId">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'sessions.columns.date' | translate }}</mat-label>
+    <input matInput formControlName="date">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'sessions.columns.practitioner' | translate }}</mat-label>
+    <input matInput formControlName="practitionerId">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'sessions.columns.type' | translate }}</mat-label>
+    <input matInput formControlName="type">
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
+  <button mat-button (click)="dialogRef.close()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'common.save' | translate }}</button>
 </mat-dialog-actions>

@@ -1,8 +1,25 @@
-<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Créer' : 'Modifier' }}</h2>
+<h2 mat-dialog-title>
+  {{ data.mode === 'create' ? ('staff.dialog.createTitle' | translate) : ('staff.dialog.editTitle' | translate) }}
+</h2>
 <mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%"><mat-label>FirstName</mat-label><input matInput formControlName="firstName"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>LastName</mat-label><input matInput formControlName="lastName"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Role</mat-label><input matInput formControlName="role"></mat-form-field>\n      <mat-form-field style="width:100%"><mat-label>Email</mat-label><input matInput formControlName="email"></mat-form-field>\n      
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'staff.columns.firstName' | translate }}</mat-label>
+    <input matInput formControlName="firstName">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'staff.columns.lastName' | translate }}</mat-label>
+    <input matInput formControlName="lastName">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'staff.columns.role' | translate }}</mat-label>
+    <input matInput formControlName="role">
+  </mat-form-field>
+  <mat-form-field style="width:100%">
+    <mat-label>{{ 'staff.columns.email' | translate }}</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
+  <button mat-button (click)="dialogRef.close()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'common.save' | translate }}</button>
 </mat-dialog-actions>
