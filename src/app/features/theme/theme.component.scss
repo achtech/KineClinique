@@ -1,0 +1,40 @@
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 columns x 4 rows = 24 colors */
+  gap: 8px;
+  align-items: center;
+  justify-items: center;
+  padding: 6px;
+}
+
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 2px solid rgba(0,0,0,0.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  cursor: pointer;
+  outline: none;
+  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.color-swatch:hover,
+.color-swatch:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.18);
+}
+
+/* Provide a visible ring for keyboard users */
+.color-swatch:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12), 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* If a chosen theme is set on the document root via a data attribute,
+   optionally allow a slightly larger border on the matching swatch.
+   This selector uses the inline style color so exact matching may require
+   additional JS; kept here for future enhancement.
+*/
+[data-app-theme] .color-swatch {
+  /* no-op placeholder for theme-specific highlights */
+}

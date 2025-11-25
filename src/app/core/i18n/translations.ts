@@ -13,6 +13,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.billing': 'Billing',
     'nav.staff': 'Staff',
     'nav.agenda': 'Agenda',
+    'nav.configuration': 'Confirguration',
 
     // Staff
     'staff.list.title': 'Staff',
@@ -126,6 +127,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.billing': 'Facturation',
     'nav.staff': 'Personnel',
     'nav.agenda': 'Agenda',
+    'nav.configuration': 'Configuración',
 
     'staff.list.title': 'Personnel',
     'staff.columns.id': 'ID',
@@ -334,6 +336,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'nav.billing': 'الفوترة',
     'nav.staff': 'الموظفون',
     'nav.agenda': 'الأجندة',
+    'nav.configuration': 'الإعدادات',
 
     'staff.list.title': 'الموظفون',
     'staff.columns.id': 'المعرف',

@@ -1,0 +1,8 @@
+<div class="theme-grid" role="list">
+  <button *ngFor="let c of colors"
+          class="color-swatch"
+          [ngStyle]="{'background': c}"
+          (click)="selectColor(c)"
+          [attr.aria-label]="'Select theme color ' + c"
+          type="button"></button>
+</div>
