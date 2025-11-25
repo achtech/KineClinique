@@ -1,70 +1,119 @@
-/* --- TOP BAR --- */
-.top-toolbar {
-  background: linear-gradient(90deg, #d64571, #f47fa2);
-  color: white;
-  padding: 0 16px;
-  font-size: 18px;
+/* Restore original styles for pink theme */
+
+.login-app-shell {
+  min-height: 100vh;
+  background: #fff0f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-/* --- LAYOUT --- */
+.login-app-title {
+  width: 100%;
+  text-align: center;
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+
+.big-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #c2185b;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.login-app-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Main app layout styles */
+.top-toolbar,
+.mat-toolbar,
+.mat-toolbar.mat-primary {
+  background: linear-gradient(90deg, #c2185b, 0%, #f06292, 100%);
+  color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.top-toolbar .mat-icon,
+.mat-toolbar .mat-icon {
+  color: #fff !important;
+}
+
+.side-menu,
+.mat-nav-list,
+.mat-list-base {
+  background: linear-gradient(180deg, #c2185b 0%, #f06292 100%);
+  color: #fff;
+  min-width: 220px;
+  max-width: 240px;
+  height: 100vh;
+  padding-top: 16px;
+}
+
+.side-menu a,
+.mat-list-item,
+.mat-list-item .mat-list-text,
+.side-menu .mat-icon {
+  color: #c2185b !important;
+}
+
+.side-menu a.active-menu {
+  background: #fde7ef !important;
+  color: #c2185b !important;
+}
+
+.side-menu a,
+.mat-list-item {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  padding: 8px 0 8px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.side-menu .mat-icon {
+  color: #fff !important;
+  font-size: 1.6rem !important;
+  margin-right: 10px;
+}
+
 .layout {
   display: flex;
-  height: calc(100vh - 64px);
+  flex-direction: row;
+  min-height: calc(100vh - 64px);
+  background: #fff0f6;
 }
 
-/* --- LEFT MENU FIXED AND CLEANED --- */
-.side-menu {
-  width: 175px;                       /* ⬅ Réduit la largeur */
-  background: #f7dbe6;
-  padding-top: 20px;
-  color: #5e0f25;
-
-  a {
-    display: flex;
-    flex-direction: row;              /* ⬅ Assure icône + texte alignés */
-    align-items: center;              /* ⬅ Aligne verticalement icône + texte */
-    gap: 12px;                        /* ⬅ Espacement icône / texte */
-    padding: 8px 10px;
-    margin: 4px 8px;
-    border-radius: 6px;
-
-    font-size: 15px;
-    font-weight: 600;
-    color: #5e0f25 !important;
-
-    mat-icon {
-      color: #5e0f25;
-      font-size: 20px;
-      line-height: 25px;              /* ⬅ Alignement parfait */
-      height: 20px;
-      width: 20px;
-      margin-right: 5px;
-    }
-
-    &:hover {
-      background: #eec0d0;
-      color: #5e0f25 !important;;
-
-      mat-icon {
-        color: #5e0f25 !important;;
-      }
-    }
-  }
-
-  /* --- ACTIVE MENU STYLE --- */
-  .active-menu {
-    background: #c2185b !important;
-    color: white !important;
-
-    mat-icon {
-      color: white !important;
-    }
-  }
-}
-
-/* --- MAIN CONTENT --- */
 .container {
   flex: 1;
-  padding: 25px;
-  background: #ffe9f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 40px 0 0 0;
+  font-size: 1rem;
+  margin: 32px;
+}
+
+@media (max-width: 900px) {
+  .side-menu {
+    min-width: 60px;
+    max-width: 80px;
+    font-size: 0.9rem;
+  }
+  .container {
+    padding: 16px 0 0 0;
+    margin-left: 0;
+  }
+}
+
+/* Restore table header/cell sizes */
+th, td, .mat-header-cell, .mat-cell {
+  font-size: 1rem !important;
+  padding: 10px 6px !important;
 }

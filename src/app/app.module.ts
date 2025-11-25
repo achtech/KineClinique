@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
 
 import { PatientsModule } from './features/patients/patients.module';
 import { AppointmentsModule } from './features/appointments/appointments.module';
@@ -26,8 +27,11 @@ import { PrescriptionsModule } from './features/prescriptions/prescriptions.modu
 import { StaffModule } from './features/staff/staff.module';
 import { BillingModule } from './features/billing/billing.module';
 
+import { LoginComponent } from './features/auth/login.component';
+import { ResetPasswordComponent } from './features/auth/reset-password.component';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -46,6 +50,7 @@ import { BillingModule } from './features/billing/billing.module';
     MatTooltipModule,
     MatMenuModule,
     MatListModule,
+    SharedModule,
     PatientsModule,
     AppointmentsModule,
     SessionsModule,

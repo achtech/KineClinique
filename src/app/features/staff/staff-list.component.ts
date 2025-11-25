@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { StaffService } from '../../core/services/staff.service';
 import { StaffDialogDialogComponent } from './staff-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-staff-list',
@@ -17,16 +18,20 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
   columnPlaceholders: Record<string, string> = {
-    id: 'ID',
-    firstName: 'Prénom',
-    lastName: 'Nom',
-    role: 'Rôle',
-    email: 'Email'
+    id: 'staff.columns.id',
+    firstName: 'staff.columns.firstName',
+    lastName: 'staff.columns.lastName',
+    role: 'staff.columns.role',
+    email: 'staff.columns.email'
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: StaffService, private dialog: MatDialog){}
+  constructor(
+    private service: StaffService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
 
   ngOnInit(){
     this.service.list().subscribe(d => {
@@ -113,5 +118,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(StaffDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

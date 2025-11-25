@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SessionService } from '../../core/services/session.service';
 import { SessionDialogDialogComponent } from './session-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-sessions-list',
@@ -17,17 +18,21 @@ export class SessionsListComponent implements OnInit, AfterViewInit {
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
   columnPlaceholders: Record<string, string> = {
-    id: 'ID',
-    patientId: 'Patient',
-    date: 'Date',
-    type: 'Type',
-    practitionerId: 'Praticien',
-    notes: 'Notes'
+    id: 'sessions.columns.id',
+    patientId: 'sessions.columns.patient',
+    date: 'sessions.columns.date',
+    type: 'sessions.columns.type',
+    practitionerId: 'sessions.columns.practitioner',
+    notes: 'sessions.columns.notes'
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: SessionService, private dialog: MatDialog){}
+  constructor(
+    private service: SessionService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
 
   ngOnInit(){
     this.service.list().subscribe(d => {
@@ -114,5 +119,8 @@ export class SessionsListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(SessionDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

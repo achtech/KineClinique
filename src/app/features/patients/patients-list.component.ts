@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PatientService } from '../../core/services/patient.service';
 import { PatientDialogDialogComponent } from './patient-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-patients-list',
@@ -17,21 +18,25 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
   columnPlaceholders: Record<string, string> = {
-    id: 'ID',
-    firstName: 'Prénom',
-    lastName: 'Nom',
-    dob: 'Date de naissance',
-    phone: 'Téléphone',
-    email: 'Email',
-    address: 'Adresse',
-    allergies: 'Allergies',
-    medicalHistory: 'Antécédents',
-    createdAt: 'Créé le'
+    id: 'patients.columns.id',
+    firstName: 'patients.columns.firstName',
+    lastName: 'patients.columns.lastName',
+    dob: 'patients.columns.dob',
+    phone: 'patients.columns.phone',
+    email: 'patients.columns.email',
+    address: 'patients.columns.address',
+    allergies: 'patients.columns.allergies',
+    medicalHistory: 'patients.columns.medicalHistory',
+    createdAt: 'patients.columns.createdAt'
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: PatientService, private dialog: MatDialog){}
+  constructor(
+    private service: PatientService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
 
   ngOnInit(){
     this.service.list().subscribe(d => {
@@ -118,5 +123,8 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

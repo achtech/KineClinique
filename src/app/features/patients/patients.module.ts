@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SharedModule } from '../../shared/shared.module';
 
 import { PatientsListComponent } from './patients-list.component';
 import { PatientDialogDialogComponent } from './patient-dialog.component';
@@ -27,7 +28,8 @@ import { PatientDialogDialogComponent } from './patient-dialog.component';
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    SharedModule
   ],
   exports: [PatientsListComponent]
 })

@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SharedModule } from '../../shared/shared.module';
 
 import { BillingListComponent } from './billing-list.component';
 import { BillingDialogDialogComponent } from './billing-dialog.component';
@@ -27,7 +28,8 @@ import { BillingDialogDialogComponent } from './billing-dialog.component';
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    SharedModule
   ],
   exports: [BillingListComponent]
 })

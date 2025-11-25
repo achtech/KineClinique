@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PrescriptionService } from '../../core/services/prescription.service';
 import { PrescriptionDialogDialogComponent } from './prescription-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-prescriptions-list',
@@ -17,18 +18,22 @@ export class PrescriptionsListComponent implements OnInit, AfterViewInit {
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
   columnPlaceholders: Record<string, string> = {
-    id: 'ID',
-    patientId: 'Patient',
-    prescriber: 'Prescripteur',
-    sessionsPrescribed: 'Séances prescrites',
-    sessionsUsed: 'Séances utilisées',
-    createdAt: 'Créé le',
-    documentUrl: 'Document'
+    id: 'prescriptions.columns.id',
+    patientId: 'prescriptions.columns.patient',
+    prescriber: 'prescriptions.columns.prescriber',
+    sessionsPrescribed: 'prescriptions.columns.sessionsPrescribed',
+    sessionsUsed: 'prescriptions.columns.sessionsUsed',
+    createdAt: 'prescriptions.columns.createdAt',
+    documentUrl: 'prescriptions.columns.document'
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: PrescriptionService, private dialog: MatDialog){}
+  constructor(
+    private service: PrescriptionService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
 
   ngOnInit(){
     this.service.list().subscribe(d => {
@@ -115,5 +120,8 @@ export class PrescriptionsListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(PrescriptionDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

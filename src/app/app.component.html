@@ -1,94 +1,104 @@
-<!-- TOP BAR -->
-<mat-toolbar color="primary" class="top-toolbar">
-  <span class="app-name">The Moroccan Physio</span>
-  <span style="flex: 1 1 auto;"></span>
+<div
+  class="app-shell"
+  [attr.dir]="(direction$ | async) || 'ltr'"
+  [class.rtl]="(direction$ | async) === 'rtl'"
+>
+  <ng-container *ngIf="!isLoginRoute; else loginOnly">
+    <!-- TOP BAR -->
+    <mat-toolbar color="primary" class="top-toolbar">
+      <span class="app-name">{{ 'app.name' | translate }}</span>
+      <span style="flex: 1 1 auto;"></span>
 
-  <!-- Notifications Menu -->
-  <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" aria-label="Notifications">
-    <mat-icon>notifications</mat-icon>
-  </button>
-  <mat-menu #notificationsMenu="matMenu">
-    <div style="padding: 16px; min-width: 180px; text-align: center; color: #c2185b;">
-      <mat-icon style="font-size: 32px; color: #c2185b;">notifications_off</mat-icon>
-      <div style="margin-top: 8px;">Aucune notification pour le moment</div>
+      <!-- Notifications Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" aria-label="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #notificationsMenu="matMenu">
+        <div style="padding: 16px; min-width: 180px; text-align: center; color: #ffffff;">
+          <mat-icon style="font-size: 32px; color: #ffffff;">notifications_off</mat-icon>
+          <div style="margin-top: 8px;">{{ 'toolbar.notifications.empty' | translate }}</div>
+        </div>
+      </mat-menu>
+
+      <!-- Translation Menu -->
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="translationMenu"
+        [attr.aria-label]="('toolbar.translation.ariaLabel' | translate)"
+      >
+        <mat-icon>translate</mat-icon>
+      </button>
+      <mat-menu #translationMenu="matMenu">
+        <button
+          mat-menu-item
+          *ngFor="let lang of languages"
+          (click)="setLanguage(lang.code)"
+        >
+          <span style="margin-inline-end:8px;">{{ lang.flag }}</span>
+          <span style="flex: 1 1 auto;">{{ ('translation.language.' + lang.code) | translate }}</span>
+          <mat-icon *ngIf="(activeLanguage$ | async) === lang.code">check</mat-icon>
+        </button>
+      </mat-menu>
+
+      <!-- Profile Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="Profile">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span style="margin-inline-start:8px;">{{ 'toolbar.profile.settings' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span style="margin-inline-start:8px;">{{ 'toolbar.profile.logout' | translate }}</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- MAIN LAYOUT -->
+    <div class="layout">
+      <!-- LEFT SIDE MENU -->
+      <mat-nav-list class="side-menu">
+        <a mat-list-item routerLink="/patients" routerLinkActive="active-menu">
+          <mat-icon>person</mat-icon>
+          <span>{{ 'nav.patients' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/appointments" routerLinkActive="active-menu">
+          <mat-icon>event</mat-icon>
+          <span>{{ 'nav.appointments' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/sessions" routerLinkActive="active-menu">
+          <mat-icon>fitness_center</mat-icon>
+          <span>{{ 'nav.sessions' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/prescriptions" routerLinkActive="active-menu">
+          <mat-icon>description</mat-icon>
+          <span>{{ 'nav.prescriptions' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/billing" routerLinkActive="active-menu">
+          <mat-icon>receipt</mat-icon>
+          <span>{{ 'nav.billing' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/staff" routerLinkActive="active-menu">
+          <mat-icon>group</mat-icon>
+          <span>{{ 'nav.staff' | translate }}</span>
+        </a>
+      </mat-nav-list>
+      <!-- CENTER CONTENT -->
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </mat-menu>
-
-  <!-- Translation Menu -->
-  <button mat-icon-button [matMenuTriggerFor]="translationMenu" aria-label="Translation">
-    <mat-icon>translate</mat-icon>
-  </button>
-  <mat-menu #translationMenu="matMenu">
-    <button mat-menu-item>
-      <span style="margin-right:8px;">🇲🇦</span> العربية
-    </button>
-    <button mat-menu-item>
-      <span style="margin-right:8px;">🇫🇷</span> Français
-    </button>
-    <button mat-menu-item>
-      <span style="margin-right:8px;">🇬🇧</span> English
-    </button>
-    <button mat-menu-item>
-      <span style="margin-right:8px;">🇪🇸</span> Español
-    </button>
-  </mat-menu>
-
-  <!-- Profile Menu -->
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="Profile">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item>
-      <mat-icon>settings</mat-icon>
-      <span style="margin-left:8px;">Paramètres</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>logout</mat-icon>
-      <span style="margin-left:8px;">Déconnexion</span>
-    </button>
-  </mat-menu>
-</mat-toolbar>
-
-<!-- MAIN LAYOUT -->
-<div class="layout">
-  
-  <!-- LEFT SIDE MENU -->
-  <mat-nav-list class="side-menu">
-    <a mat-list-item routerLink="/patients" routerLinkActive="active-menu">
-      <mat-icon>person</mat-icon>
-      <span>Patients</span>
-    </a>
-
-    <a mat-list-item routerLink="/appointments" routerLinkActive="active-menu">
-      <mat-icon>event</mat-icon>
-      <span>Rendez-vous</span>
-    </a>
-
-    <a mat-list-item routerLink="/sessions" routerLinkActive="active-menu">
-      <mat-icon>fitness_center</mat-icon>
-      <span>Séances</span>
-    </a>
-
-    <a mat-list-item routerLink="/prescriptions" routerLinkActive="active-menu">
-      <mat-icon>description</mat-icon>
-      <span>Ordonnances</span>
-    </a>
-
-    <a mat-list-item routerLink="/billing" routerLinkActive="active-menu">
-      <mat-icon>receipt</mat-icon>
-      <span>Facturation</span>
-    </a>
-
-    <a mat-list-item routerLink="/staff" routerLinkActive="active-menu">
-      <mat-icon>group</mat-icon>
-      <span>Personnel</span>
-    </a>
-
-  </mat-nav-list>
-
-  <!-- CENTER CONTENT -->
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-
+  </ng-container>
+  <ng-template #loginOnly>
+    <div class="login-app-shell">
+      <div class="login-app-title big-title">
+        {{ 'app.name' | translate }}
+      </div>
+      <div class="login-app-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ng-template>
 </div>

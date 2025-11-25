@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { BillingService } from '../../core/services/billing.service';
 import { BillingDialogDialogComponent } from './billing-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-billing-list',
@@ -19,7 +20,11 @@ export class BillingListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: BillingService, private dialog: MatDialog){}
+  constructor(
+    private service: BillingService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
   ngOnInit(){
     this.service.list().subscribe(d => {
       this.dataSource.data = d;
@@ -105,5 +110,8 @@ export class BillingListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(BillingDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

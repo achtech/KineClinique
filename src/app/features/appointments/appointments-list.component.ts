@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AppointmentService } from '../../core/services/appointment.service';
 import { AppointmentDialogDialogComponent } from './appointment-dialog.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-appointments-list',
@@ -19,7 +20,11 @@ export class AppointmentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: AppointmentService, private dialog: MatDialog){}
+  constructor(
+    private service: AppointmentService,
+    private dialog: MatDialog,
+    private translation: TranslationService
+  ){}
 
   ngOnInit(){
     this.service.list().subscribe(d => {
@@ -106,5 +111,8 @@ export class AppointmentsListComponent implements OnInit, AfterViewInit {
 
   openEdit(item: any){ this.dialog.open(AppointmentDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
-  delete(item: any){ if(confirm('Supprimer ?')) this.service.delete(item.id).subscribe(); }
+  delete(item: any){
+    const message = this.translation.translate('common.confirmDelete');
+    if(confirm(message)) this.service.delete(item.id).subscribe();
+  }
 }

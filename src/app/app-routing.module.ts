@@ -6,15 +6,21 @@ import { SessionsListComponent } from './features/sessions/sessions-list.compone
 import { PrescriptionsListComponent } from './features/prescriptions/prescriptions-list.component';
 import { StaffListComponent } from './features/staff/staff-list.component';
 import { BillingListComponent } from './features/billing/billing-list.component';
+import { LoginComponent } from './features/auth/login.component';
+import { ResetPasswordComponent } from './features/auth/reset-password.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: 'patients', pathMatch: 'full' },
-  { path: 'patients', component: PatientsListComponent },
-  { path: 'appointments', component: AppointmentsListComponent },
-  { path: 'sessions', component: SessionsListComponent },
-  { path: 'prescriptions', component: PrescriptionsListComponent },
-  { path: 'staff', component: StaffListComponent },
-  { path: 'billing', component: BillingListComponent },
+  { path: 'patients', component: PatientsListComponent, canActivate: [AuthGuard] },
+  { path: 'appointments', component: AppointmentsListComponent, canActivate: [AuthGuard] },
+  { path: 'sessions', component: SessionsListComponent, canActivate: [AuthGuard] },
+  { path: 'prescriptions', component: PrescriptionsListComponent, canActivate: [AuthGuard] },
+  { path: 'staff', component: StaffListComponent, canActivate: [AuthGuard] },
+  { path: 'billing', component: BillingListComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
