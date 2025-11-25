@@ -3,6 +3,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { SessionDialogDialogComponent } from '../sessions/session-dialog.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -19,14 +21,41 @@ import { SharedModule } from '../../shared/shared.module';
   selector: 'app-agenda',
   template: `
     <div class="agenda-toolbar">
-      <h2>{{ 'nav.agenda' | translate }}</h2>
+      <div class="left-controls">
+        <button mat-icon-button aria-label="Previous" (click)="prev()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="title">
+          <div *ngIf="view === 'day'">{{ selectedDate | date:'fullDate' }}</div>
+          <div *ngIf="view === 'week'">{{ weekStart | date:'MMM d' }} - {{ weekEnd | date:'MMM d, yyyy' }}</div>
+          <div *ngIf="view === 'month'">{{ currentMonth | date:'MMMM yyyy' }}</div>
+        </div>
+
+        <button mat-icon-button aria-label="Next" (click)="next()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
+      <h2 class="sr-only">{{ 'nav.agenda' | translate }}</h2>
+
       <div class="controls">
-        <mat-select [(ngModel)]="view" aria-label="View selector">
-          <mat-option value="day">{{ 'agenda.view.day' | translate }}</mat-option>
-          <mat-option value="week">{{ 'agenda.view.week' | translate }}</mat-option>
-          <mat-option value="month">{{ 'agenda.view.month' | translate }}</mat-option>
-        </mat-select>
-        <button mat-raised-button color="primary" (click)="today()">{{ 'common.view' | translate }}</button>
+        <mat-button-toggle-group [(ngModel)]="view" appearance="legacy" aria-label="View selector" class="view-toggle">
+          <mat-button-toggle value="day">
+            <mat-icon>today</mat-icon>
+            <span class="label"> {{ 'agenda.view.day' | translate }}</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="week">
+            <mat-icon>view_week</mat-icon>
+            <span class="label"> {{ 'agenda.view.week' | translate }}</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="month">
+            <mat-icon>calendar_month</mat-icon>
+            <span class="label"> {{ 'agenda.view.month' | translate }}</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button mat-raised-button color="primary" (click)="today()">{{ 'common.today' | translate }}</button>
       </div>
     </div>
 
@@ -62,9 +91,13 @@ import { SharedModule } from '../../shared/shared.module';
         <div *ngSwitchCase="'month'">
           <div class="month-grid">
             <div class="month-controls">
-              <button mat-button (click)="prevMonth()">‹</button>
+              <button mat-icon-button aria-label="Previous month" (click)="prevMonth()">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
               <div class="month-title">{{ currentMonth | date:'MMMM yyyy' }}</div>
-              <button mat-button (click)="nextMonth()">›</button>
+              <button mat-icon-button aria-label="Next month" (click)="nextMonth()">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
             </div>
             <div class="month-body">
               <div class="month-row" *ngFor="let week of monthMatrix">
@@ -79,8 +112,16 @@ import { SharedModule } from '../../shared/shared.module';
     </div>
   `,
   styles: [`
-    .agenda-toolbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .agenda-toolbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:12px; }
+    .left-controls { display:flex; align-items:center; gap:8px; min-width:260px; }
+    .title { text-align:center; font-weight:600; min-width:180px; }
+    .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
     .controls { display:flex; gap:8px; align-items:center; }
+    .view-toggle { display:flex; gap:6px; align-items:center; background:transparent; }
+    .view-toggle .mat-button-toggle { display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:6px; }
+    .view-toggle .mat-button-toggle.mat-button-toggle-checked { background: linear-gradient(90deg, rgba(0,120,212,0.12), rgba(0,120,212,0.06)); }
+    .mat-button-toggle-button {color:brown !important;}
     .day-grid .hour-row { display:flex; margin-bottom:6px; }
     .hour-label { width:80px; text-align:right; padding-right:8px; color:rgba(0,0,0,0.6); }
     .slot { flex:1; border:1px dashed #ddd; padding:12px; cursor:pointer; background:#fff; }
@@ -93,11 +134,43 @@ import { SharedModule } from '../../shared/shared.module';
     .week-hour-label { width:80px; text-align:right; padding-right:8px; color:rgba(0,0,0,0.6); }
     .week-slot { flex:1; min-height:48px; border:1px dashed #eee; margin:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
     .month-grid { }
-    .month-controls { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .month-controls { display:flex; align-items:center; gap:8px; margin-bottom:8px; justify-content:center; }
     .month-body { display:flex; flex-direction:column; gap:6px; }
     .month-row { display:flex; gap:6px; }
     .month-day { flex:1; min-height:80px; border:1px solid #eee; padding:6px; cursor:pointer; }
     .day-number { font-weight:600; margin-bottom:6px; }
+
+    /* Style overrides for the agenda view selector panel (Material overlay lives outside component DOM) */
+    /* ::ng-deep is used to reach into the overlay - keep these rules minimal and specific */
+    ::ng-deep .agenda-select-panel .mat-select-panel {
+      background: #2f2f2f; /* dark panel */
+      color: #fff;
+      min-width: 140px;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      padding: 6px 0;
+    }
+    ::ng-deep .agenda-select-panel .mat-option {
+      color: #fff;
+      padding: 10px 18px;
+      font-size: 14px;
+      height: auto;
+      line-height: 20px;
+      border-radius: 4px;
+      margin: 2px 8px;
+    }
+    ::ng-deep .agenda-select-panel .mat-option:hover {
+      background: rgba(255,255,255,0.04);
+    }
+    ::ng-deep .agenda-select-panel .mat-option.mat-selected {
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      color: #fff;
+      font-weight: 600;
+    }
+    ::ng-deep .agenda-select-panel .mat-option .mat-pseudo-checkbox,
+    ::ng-deep .agenda-select-panel .mat-option .mat-option-ripple {
+      display: none !important; /* hide default checkbox/ripple for a cleaner look */
+    }
   `]
 })
 export class AgendaComponent {
@@ -106,14 +179,33 @@ export class AgendaComponent {
   weekDays: string[] = [];
   currentMonth = new Date();
   monthMatrix: (Date | null)[][] = [];
+  // Selected date used for "day" view and to center week view when going to today
+  selectedDate: Date = new Date();
 
   constructor(private dialog: MatDialog, private datePipe: DatePipe) {
     this.generateWeekDays();
     this.buildMonthMatrix();
   }
 
-  generateWeekDays() {
-    const start = new Date();
+  // Helpers for week display (start and end)
+  get weekStart(): Date {
+    const base = new Date(this.selectedDate);
+    const dayIndex = base.getDay();
+    // Start on Monday
+    const diff = (dayIndex === 0) ? -6 : 1 - dayIndex;
+    const start = new Date(base);
+    start.setDate(base.getDate() + diff);
+    return start;
+  }
+
+  get weekEnd(): Date {
+    const end = new Date(this.weekStart);
+    end.setDate(this.weekStart.getDate() + 6);
+    return end;
+  }
+
+  generateWeekDays(baseDate: Date = this.selectedDate) {
+    const start = new Date(baseDate);
     const dayIndex = start.getDay(); // 0..6
     // Build week labels starting Monday
     const labels: string[] = [];
@@ -128,11 +220,15 @@ export class AgendaComponent {
 
   createSessionFor(hour: string, dayLabel?: string) {
     // Create an approximate date to send to the session dialog
-    let date = new Date();
-    if (dayLabel) {
-      // try to parse dayLabel using DatePipe fallback (not perfect but acceptable)
-      // for demo purposes use today
-      date = new Date();
+    let date = new Date(this.selectedDate);
+    if (this.view === 'week' && dayLabel) {
+      // try to map the dayLabel to an actual date in the displayed week
+      const idx = this.weekDays.indexOf(dayLabel);
+      if (idx >= 0) {
+        const start = this.weekStart;
+        date = new Date(start);
+        date.setDate(start.getDate() + idx);
+      }
     }
     // send time in data so dialog can prefill date/time if it supports it
     this.dialog.open(SessionDialogDialogComponent, {
@@ -150,8 +246,52 @@ export class AgendaComponent {
   }
 
   today() {
-    this.currentMonth = new Date();
-    this.buildMonthMatrix();
+    const now = new Date();
+    this.selectedDate = now;
+    if (this.view === 'month') {
+      // Reset the calendar to the current month
+      this.currentMonth = now;
+      this.buildMonthMatrix();
+    } else if (this.view === 'week') {
+      // Center the week view on the current date
+      this.generateWeekDays(now);
+    } else if (this.view === 'day') {
+      // Select today for the day view (useful for highlighting or pre-filling dialogs)
+      // selectedDate already set
+      this.generateWeekDays(now);
+    }
+  }
+
+  prev() {
+    if (this.view === 'day') {
+      const d = new Date(this.selectedDate);
+      d.setDate(d.getDate() - 1);
+      this.selectedDate = d;
+      this.generateWeekDays(this.selectedDate);
+    } else if (this.view === 'week') {
+      const d = new Date(this.selectedDate);
+      d.setDate(d.getDate() - 7);
+      this.selectedDate = d;
+      this.generateWeekDays(this.selectedDate);
+    } else if (this.view === 'month') {
+      this.prevMonth();
+    }
+  }
+
+  next() {
+    if (this.view === 'day') {
+      const d = new Date(this.selectedDate);
+      d.setDate(d.getDate() + 1);
+      this.selectedDate = d;
+      this.generateWeekDays(this.selectedDate);
+    } else if (this.view === 'week') {
+      const d = new Date(this.selectedDate);
+      d.setDate(d.getDate() + 7);
+      this.selectedDate = d;
+      this.generateWeekDays(this.selectedDate);
+    } else if (this.view === 'month') {
+      this.nextMonth();
+    }
   }
 
   prevMonth() {
@@ -181,10 +321,12 @@ export class AgendaComponent {
     for (let d = 1; d <= daysInMonth; d++) {
       days.push(new Date(year, month, d));
     }
-    // chunk into weeks
+    // chunk into weeks (ensure each week has 7 cells)
     const matrix: (Date | null)[][] = [];
     for (let i = 0; i < days.length; i += 7) {
-      matrix.push(days.slice(i, i + 7));
+      const slice = days.slice(i, i + 7);
+      while (slice.length < 7) slice.push(null);
+      matrix.push(slice);
     }
     this.monthMatrix = matrix;
   }
@@ -197,6 +339,8 @@ export class AgendaComponent {
     FormsModule,
     MatButtonModule,
     MatSelectModule,
+    MatButtonToggleModule,
+    MatIconModule,
     MatDialogModule,
     SharedModule
   ],
