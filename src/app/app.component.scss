@@ -65,7 +65,16 @@
 
 .side-menu a.active-menu {
   background: #fde7ef !important;
+  color: #c2185b !important; /* Match the pink of the "New" button */
+  font-weight: 700;
+}
+
+/* Ensure all text and icons in the active menu are pink and bold */
+.side-menu a.active-menu .mat-list-text,
+.side-menu a.active-menu span,
+.side-menu a.active-menu .mat-icon {
   color: #c2185b !important;
+  font-weight: 700;
 }
 
 .side-menu a,
