@@ -22,6 +22,10 @@
     <mat-label>{{ 'patients.columns.email' | translate }}</mat-label>
     <input matInput formControlName="email">
   </mat-form-field>
+  <div style="margin: 12px 0;">
+    <label>{{ 'patients.columns.attachment' | translate }}</label>
+    <input type="file" (change)="onAttachmentChange($event)">
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="dialogRef.close()">{{ 'common.cancel' | translate }}</button>

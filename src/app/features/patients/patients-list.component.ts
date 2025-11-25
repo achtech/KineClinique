@@ -13,7 +13,7 @@ import { TranslationService } from '../../core/services/translation.service';
   styleUrls: ['./patients-list.component.scss']
 })
 export class PatientsListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dob', 'phone', 'email', 'address', 'allergies', 'medicalHistory', 'createdAt', 'actions'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dob', 'phone', 'email', 'attachment', 'address', 'allergies', 'medicalHistory', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
@@ -24,6 +24,7 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
     dob: 'patients.columns.dob',
     phone: 'patients.columns.phone',
     email: 'patients.columns.email',
+    attachment: 'patients.columns.attachment',
     address: 'patients.columns.address',
     allergies: 'patients.columns.allergies',
     medicalHistory: 'patients.columns.medicalHistory',

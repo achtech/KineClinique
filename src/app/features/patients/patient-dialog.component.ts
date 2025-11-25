@@ -11,6 +11,7 @@ import { PatientService } from '../../core/services/patient.service';
 export class PatientDialogDialogComponent implements OnInit {
   form: FormGroup;
   mode: 'create'|'edit' = 'create';
+  attachmentFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -24,11 +25,37 @@ export class PatientDialogDialogComponent implements OnInit {
       'lastName': ['', Validators.required],
       'dob': [''],
       'phone': [''],
-      'email': ['']
+      'email': [''],
+      'attachmentUrl': ['']
     });
   }
 
-  ngOnInit(){ if(this.data?.mode === 'edit' && this.data.item){ this.mode = 'edit'; this.form.patchValue(this.data.item || {}); } }
+  ngOnInit() {
+    if (this.data?.mode === 'edit' && this.data.item) {
+      this.mode = 'edit';
+      this.form.patchValue(this.data.item || {});
+    }
+  }
 
-  save(){ const value = this.form.value; if(this.mode === 'create'){ this.service.create(value).subscribe(()=>this.dialogRef.close(true)); } else { this.service.update(value.id, value).subscribe(()=>this.dialogRef.close(true)); } }
+  onAttachmentChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.attachmentFile = input.files[0];
+      // Simulate upload: read as data URL (in real app, upload to server and get URL)
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.form.patchValue({ attachmentUrl: reader.result as string });
+      };
+      reader.readAsDataURL(this.attachmentFile);
+    }
+  }
+
+  save() {
+    const value = this.form.value;
+    if (this.mode === 'create') {
+      this.service.create(value).subscribe(() => this.dialogRef.close(true));
+    } else {
+      this.service.update(value.id, value).subscribe(() => this.dialogRef.close(true));
+    }
+  }
 }

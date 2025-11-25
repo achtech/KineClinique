@@ -58,6 +58,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Allergies',
     'patients.columns.medicalHistory': 'Medical history',
     'patients.columns.createdAt': 'Created at',
+    'patients.columns.attachment': 'Attachment',
     'patients.dialog.createTitle': 'Create Patient',
     'patients.dialog.editTitle': 'Edit Patient',
 
@@ -94,6 +95,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.cancel': 'Cancel',
     'common.save': 'Save',
     'common.delete': 'Delete',
+    'common.download': 'Download',
 
     // Toolbar & profile
     'toolbar.notifications.empty': 'No notifications',
@@ -157,6 +159,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Allergies',
     'patients.columns.medicalHistory': 'Antécédents médicaux',
     'patients.columns.createdAt': 'Créé le',
+    'patients.columns.attachment': 'Pièce jointe',
     'patients.dialog.createTitle': 'Créer un patient',
     'patients.dialog.editTitle': 'Modifier le patient',
 
@@ -190,6 +193,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.cancel': 'Annuler',
     'common.save': 'Sauvegarder',
     'common.delete': 'Supprimer',
+    'common.download': 'Télécharger',
 
     'toolbar.notifications.empty': 'Aucune notification',
     'toolbar.translation.ariaLabel': 'Changer de langue',
@@ -251,6 +255,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'Alergias',
     'patients.columns.medicalHistory': 'Historial médico',
     'patients.columns.createdAt': 'Creado el',
+    'patients.columns.attachment': 'Adjunto',
     'patients.dialog.createTitle': 'Crear paciente',
     'patients.dialog.editTitle': 'Editar paciente',
 
@@ -284,6 +289,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.cancel': 'Cancelar',
     'common.save': 'Guardar',
     'common.delete': 'Eliminar',
+    'common.download': 'Descargar',
 
     'toolbar.notifications.empty': 'Sin notificaciones',
     'toolbar.translation.ariaLabel': 'Cambiar idioma',
@@ -345,6 +351,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'patients.columns.allergies': 'الحساسيات',
     'patients.columns.medicalHistory': 'التاريخ الطبي',
     'patients.columns.createdAt': 'تاريخ الإنشاء',
+    'patients.columns.attachment': 'مرفق',
     'patients.dialog.createTitle': 'إضافة مريض',
     'patients.dialog.editTitle': 'تعديل المريض',
 
@@ -378,6 +385,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     'common.cancel': 'إلغاء',
     'common.save': 'حفظ',
     'common.delete': 'حذف',
+    'common.download': 'تنزيل',
 
     'toolbar.notifications.empty': 'لا توجد إشعارات',
     'toolbar.translation.ariaLabel': 'تغيير اللغة',

@@ -9,4 +9,5 @@ export interface Patient {
   allergies?: string[];
   medicalHistory?: string;
   createdAt?: string;
+  attachmentUrl?: string; // URL to the attachment document
 }
