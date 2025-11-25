@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { StaffService } from '../../core/services/staff.service';
 import { StaffDialogDialogComponent } from './staff-dialog.component';
 import { TranslationService } from '../../core/services/translation.service';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog.component';
 
 @Component({
   selector: 'app-staff-list',
@@ -119,7 +120,14 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   openEdit(item: any){ this.dialog.open(StaffDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
 
   delete(item: any){
-    const message = this.translation.translate('common.confirmDelete');
-    if(confirm(message)) this.service.delete(item.id).subscribe();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: { message: 'common.confirmDelete' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.service.delete(item.id).subscribe();
+      }
+    });
   }
 }

@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ 'common.confirmDelete' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ data.message | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close(false)">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close(true)">{{ 'common.delete' | translate }}</button>
+</mat-dialog-actions>
