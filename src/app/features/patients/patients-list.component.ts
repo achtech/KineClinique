@@ -13,21 +13,20 @@ import { TranslationService } from '../../core/services/translation.service';
   styleUrls: ['./patients-list.component.scss']
 })
 export class PatientsListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dob', 'phone', 'email', 'attachment', 'address', 'allergies', 'medicalHistory', 'actions'];
+  // show only the first 8 columns + actions as requested
+  displayedColumns: string[] = ['id', 'cin', 'firstName', 'lastName', 'dob', 'phone', 'email', 'insuranceType', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   globalFilter: string = '';
   columnFilters: Record<string, string> = {};
   columnPlaceholders: Record<string, string> = {
     id: 'patients.columns.id',
+    cin: 'patients.columns.cin',
     firstName: 'patients.columns.firstName',
     lastName: 'patients.columns.lastName',
     dob: 'patients.columns.dob',
     phone: 'patients.columns.phone',
     email: 'patients.columns.email',
-    attachment: 'patients.columns.attachment',
-    address: 'patients.columns.address',
-    allergies: 'patients.columns.allergies',
-    medicalHistory: 'patients.columns.medicalHistory',
+    insuranceType: 'patients.columns.insuranceType',
     createdAt: 'patients.columns.createdAt'
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -120,9 +119,12 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
     return value != null ? value.toString().toLowerCase() : '';
   }
 
-  openCreate(){ this.dialog.open(PatientDialogDialogComponent, { width: '420px', data: { mode: 'create' } }); }
+  openCreate(){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'create' } }); }
 
-  openEdit(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '420px', data: { mode: 'edit', item } }); }
+  openEdit(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'edit', item } }); }
+
+  // new: open details dialog (read-only view)
+  openDetails(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'details', item } }); }
 
   delete(item: any){
     const message = this.translation.translate('common.confirmDelete');

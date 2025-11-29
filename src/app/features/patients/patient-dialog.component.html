@@ -1,33 +1,234 @@
-<h2 mat-dialog-title>
-  {{ data.mode === 'create' ? ('patients.dialog.createTitle' | translate) : ('patients.dialog.editTitle' | translate) }}
-</h2>
-<mat-dialog-content [formGroup]="form">
-  <mat-form-field style="width:100%">
-    <mat-label>{{ 'patients.columns.firstName' | translate }}</mat-label>
-    <input matInput formControlName="firstName">
-  </mat-form-field>
-  <mat-form-field style="width:100%">
-    <mat-label>{{ 'patients.columns.lastName' | translate }}</mat-label>
-    <input matInput formControlName="lastName">
-  </mat-form-field>
-  <mat-form-field style="width:100%">
-    <mat-label>{{ 'patients.columns.dob' | translate }}</mat-label>
-    <input matInput formControlName="dob">
-  </mat-form-field>
-  <mat-form-field style="width:100%">
-    <mat-label>{{ 'patients.columns.phone' | translate }}</mat-label>
-    <input matInput formControlName="phone">
-  </mat-form-field>
-  <mat-form-field style="width:100%">
-    <mat-label>{{ 'patients.columns.email' | translate }}</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
-  <div style="margin: 12px 0;">
-    <label>{{ 'patients.columns.attachment' | translate }}</label>
-    <input type="file" (change)="onAttachmentChange($event)">
+<!-- Header: uses side-menu background (var(--app-primary)) and shows "Patient : LastName FirstName" with mode icons -->
+<div class="patient-dialog-header" role="heading" aria-level="1">
+  <div class="header-title">
+    <mat-icon *ngIf="mode === 'details'">info</mat-icon>
+    <mat-icon *ngIf="mode === 'edit'">edit</mat-icon>
+    <span class="label">Patient:</span>
+    <span class="value">{{ fullName }}</span>
   </div>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">{{ 'common.cancel' | translate }}</button>
-  <button mat-raised-button color="primary" (click)="save()">{{ 'common.save' | translate }}</button>
-</mat-dialog-actions>
+</div>
+
+<!-- Body: uses a 3-column responsive grid for both details and create/edit -->
+<div class="patient-dialog-body">
+  <!-- CREATE / EDIT: editable form (3 columns) -->
+  <form [formGroup]="form" *ngIf="mode === 'create' || mode === 'edit'">
+    <div class="form-grid">
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.cin' | translate }}</mat-label>
+          <input matInput formControlName="cin">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.firstName' | translate }}</mat-label>
+          <input matInput formControlName="firstName">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.lastName' | translate }}</mat-label>
+          <input matInput formControlName="lastName">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.dob' | translate }}</mat-label>
+          <input matInput formControlName="dob" type="date">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.phone' | translate }}</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.email' | translate }}</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.insuranceType' | translate }}</mat-label>
+          <mat-select formControlName="insuranceType">
+            <mat-option value="none">None</mat-option>
+            <mat-option value="CNOPS">CNOPS</mat-option>
+            <mat-option value="CNSS">CNSS</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.mutuelleNumber' | translate }}</mat-label>
+          <input matInput formControlName="mutuelleNumber">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.doctor' | translate }}</mat-label>
+          <input matInput formControlName="doctor">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.disease' | translate }}</mat-label>
+          <input matInput formControlName="disease">
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item grid-span-3">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label>{{ 'patients.columns.medicalHistory' | translate }}</mat-label>
+          <textarea matInput rows="3" formControlName="medicalHistory"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item grid-span-2">
+        <label>{{ 'patients.columns.ordonnanceFiles' | translate }}</label>
+        <input type="file" (change)="onOrdonnanceFilesChange($event)" multiple>
+      </div>
+
+      <div class="grid-item">
+        <label>{{ 'patients.columns.attachment' | translate }}</label>
+        <input type="file" (change)="onAttachmentChange($event)">
+      </div>
+    </div>
+  </form>
+
+  <!-- DETAILS: read-only view using the same 3-column grid (label + disabled input) -->
+  <div class="details-grid" *ngIf="mode === 'details'">
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.cin' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.cin || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.firstName' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.firstName || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.lastName' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.lastName || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.dob' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.dob || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.phone' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.phone || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.email' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.email || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.insuranceType' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.insuranceType || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.mutuelleNumber' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.mutuelleNumber || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.doctor' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.doctor || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.disease' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.disease || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.address' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.address || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.allergies' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="(form.value.allergies || []).join(', ') || '-'">
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item grid-span-3">
+      <label class="field-label">{{ 'patients.columns.medicalHistory' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <textarea matInput rows="3" [disabled]="true">{{ form.value.medicalHistory || '-' }}</textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <label class="field-label">{{ 'patients.columns.attachment' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="form.value.attachmentUrl ? ('Download') : '-'">
+      </mat-form-field>
+      <div class="download-links" *ngIf="form.value.attachmentUrl">
+        <a [href]="form.value.attachmentUrl" download target="_blank">{{ 'common.download' | translate }}</a>
+      </div>
+    </div>
+
+    <div class="grid-item grid-span-2">
+      <label class="field-label">{{ 'patients.columns.ordonnanceFiles' | translate }}</label>
+      <mat-form-field appearance="outline" style="width:100%">
+        <input matInput [disabled]="true" [value]="(form.value.ordonnanceFiles || []).length ? ((form.value.ordonnanceFiles || []).length + ' file(s)') : '-'">
+      </mat-form-field>
+      <div class="download-links" *ngIf="form.value.ordonnanceFiles?.length">
+        <div *ngFor="let f of form.value.ordonnanceFiles">
+          <a [href]="f" download target="_blank">{{ 'common.download' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer: uses side-menu background and contains Close (details) or Cancel+Save (create/edit) -->
+<div class="patient-dialog-footer">
+  <button mat-stroked-button color="primary" *ngIf="mode === 'details'" (click)="close()">Close</button>
+  <ng-container *ngIf="mode !== 'details'">
+    <button mat-button (click)="close()">{{ 'common.cancel' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="save()">{{ 'common.save' | translate }}</button>
+  </ng-container>
+</div>

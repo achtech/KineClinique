@@ -19,68 +19,107 @@
 
 <div style="width:100%; margin-top:12px;">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width:100%;">
-  <ng-container matColumnDef="id">
+
+    <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.id' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.id}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.id}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="firstName">
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.cin' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{e.cin}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.firstName' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.firstName}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.firstName}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="lastName">
+    <ng-container matColumnDef="lastName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.lastName' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.lastName}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.lastName}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="dob">
+    <ng-container matColumnDef="dob">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.dob' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.dob}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.dob}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="phone">
+    <ng-container matColumnDef="phone">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.phone' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.phone}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.phone}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
+    <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.email' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.email}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.email}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="attachment">
+    <ng-container matColumnDef="insuranceType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.insuranceType' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{e.insuranceType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="mutuelleNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.mutuelleNumber' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{e.mutuelleNumber}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="doctor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.doctor' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{e.doctor}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="disease">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.disease' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{e.disease}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="attachment">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.attachment' | translate }}</th>
       <td mat-cell *matCellDef="let e">
         <a *ngIf="e.attachmentUrl" [href]="e.attachmentUrl" download target="_blank">{{ 'common.download' | translate }}</a>
       </td>
-  </ng-container>
+    </ng-container>
 
-  <ng-container matColumnDef="address">
+    <ng-container matColumnDef="ordonnanceFiles">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.ordonnanceFiles' | translate }}</th>
+      <td mat-cell *matCellDef="let e">
+        <ng-container *ngIf="e.ordonnanceFiles?.length; else noneOrd">
+          <div *ngFor="let f of e.ordonnanceFiles">
+            <a [href]="f" download target="_blank">{{ 'common.download' | translate }}</a>
+          </div>
+        </ng-container>
+        <ng-template #noneOrd><span>-</span></ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.address' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.address}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.address}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="allergies">
+    <ng-container matColumnDef="allergies">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.allergies' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.allergies?.join(', ')}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.allergies?.join(', ')}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="medicalHistory">
+    <ng-container matColumnDef="medicalHistory">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'patients.columns.medicalHistory' | translate }}</th>
-    <td mat-cell *matCellDef="let e">{{e.medicalHistory}}</td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">{{e.medicalHistory}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | translate }}</th>
-    <td mat-cell *matCellDef="let e">
-      <button mat-icon-button (click)="openEdit(e)" matTooltip="{{ 'common.edit' | translate }}" matTooltipPosition="above"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button color="warn" (click)="delete(e)" matTooltip="{{ 'common.delete' | translate }}" matTooltipPosition="above"><mat-icon>delete</mat-icon></button>
-    </td>
-  </ng-container>
+      <td mat-cell *matCellDef="let e">
+        <button mat-icon-button (click)="openDetails(e)" matTooltip="{{ 'common.view' | translate }}" matTooltipPosition="above"><mat-icon>info</mat-icon></button>
+        <button mat-icon-button (click)="openEdit(e)" matTooltip="{{ 'common.edit' | translate }}" matTooltipPosition="above"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="delete(e)" matTooltip="{{ 'common.delete' | translate }}" matTooltipPosition="above"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
 
     <thead>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr class="filter-row">
         <th *ngFor="let col of displayedColumns">
           <ng-container [ngSwitch]="col">
@@ -99,9 +138,11 @@
         </th>
       </tr>
     </thead>
+
     <tbody>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </tbody>
-</table>
+  </table>
+
   <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30]" showFirstLastButtons></mat-paginator>
 </div>

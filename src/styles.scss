@@ -6,6 +6,17 @@
   --app-on-primary: #ffffff;
 }
 
+/* Map MDC / Material outlined/focused variables to our runtime variable so the
+   prebuilt pink theme uses --app-primary instead of hardcoded pink values.
+   This prevents the imported prebuilt theme from leaving focused input borders pink. */
+html {
+  --mdc-outlined-text-field-focus-outline-color: var(--app-primary);
+  --mdc-outlined-text-field-outline-color: var(--app-primary);
+  --mdc-outlined-text-field-caret-color: var(--app-primary);
+  --mdc-filled-text-field-caret-color: var(--app-primary);
+  --mat-form-field-focus-select-arrow-color: var(--app-primary);
+}
+
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
@@ -87,3 +98,162 @@ a, a:visited, a:active {
 }
 
 /* Keep any previously added 'pink theme' related tweaks minimal but allow the JS theme to override visually */
+
+/* Override Angular Material input/select colors so they follow the runtime
+   CSS variable (--app-primary) instead of the hardcoded pink from the imported
+   prebuilt theme. These rules target the common parts used by mat-form-field
+   (outline, ripple, label) and mat-select so the accent color comes from the
+   selected theme color at runtime. */
+
+.mat-form-field-appearance-outline .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  /* outline is an SVG path in Material; setting stroke covers that case */
+  stroke: var(--app-primary) !important;
+  color: var(--app-primary) !important;
+  border-color: var(--app-primary) !important;
+}
+
+/* The underline / ripple that appears on focused inputs */
+.mat-form-field .mat-form-field-ripple,
+.mat-form-field.mat-focused .mat-form-field-ripple,
+.mat-form-field-appearance-standard .mat-form-field-underline,
+.mat-form-field-appearance-standard.mat-focused .mat-form-field-underline {
+  background-color: var(--app-primary) !important;
+}
+
+/* Labels (floating and normal) */
+.mat-form-field-label,
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: var(--app-primary) !important;
+}
+
+/* Placeholder/text accent for inputs when focused */
+.mat-input-element:focus,
+.mat-form-field.mat-focused .mat-input-element {
+  color: inherit; /* don't force text color */
+}
+
+/* Select arrow and selected option highlight */
+.mat-select-arrow,
+.mat-select-value,
+.mat-select-trigger {
+  color: var(--app-primary) !important;
+}
+
+.mat-select-panel .mat-option.mat-selected {
+  background-color: rgba(0,0,0,0.06);
+}
+
+/* If other components still use the prebuilt theme variables, force their
+   primary color to our runtime variable where safe */
+.mat-accent, .mat-warn {
+  /* keep existing behavior for accent/warn — only override primary where needed */
+}
+
+/* Ensure focus outlines that rely on box-shadow also use the app variable */
+.mat-form-field.mat-focused .mat-form-field-wrapper,
+.mat-form-field.mat-focused .mat-form-field-infix {
+  box-shadow: none !important;
+}
+
+/* Last-resort rule to catch remaining pinks from the prebuilt theme on inputs */
+.mat-form-field, .mat-input-element, .mat-select {
+  --material-primary: var(--app-primary);
+}
+
+/* Strong overrides to ensure focused/active inputs use the runtime --app-primary color.
+   These target the SVG outline path, outline-thick, ripple/underline, labels and select arrow
+   so any remaining pinks from the prebuilt theme are overridden. */
+.mat-form-field.mat-focused .mat-form-field-outline path,
+.mat-form-field-appearance-outline .mat-form-field-outline path,
+.mat-form-field.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  stroke: var(--app-primary) !important;
+  color: var(--app-primary) !important;
+  border-color: var(--app-primary) !important;
+}
+
+/* Focused/floating labels */
+.mat-form-field.mat-focused .mat-form-field-label,
+.mat-form-field-label.mat-focused {
+  color: var(--app-primary) !important;
+}
+
+/* Ripple / underline */
+.mat-form-field.mat-focused .mat-form-field-ripple,
+.mat-form-field.mat-focused .mat-form-field-underline,
+.mat-form-field .mat-form-field-ripple {
+  background-color: var(--app-primary) !important;
+}
+
+/* Ensure mat-select arrow / trigger follow the runtime color when focused/active */
+.mat-select.mat-focused .mat-select-arrow,
+.mat-select.mat-focused .mat-select-value,
+.mat-select-trigger.mat-focused {
+  color: var(--app-primary) !important;
+  fill: var(--app-primary) !important;
+}
+
+/* Inputs / textareas focus: remove leftover pink box-shadow and keep focus indication using variable */
+.mat-input-element:focus,
+textarea.mat-input-element:focus,
+.mat-form-field.mat-focused .mat-form-field-infix {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0) !important;
+}
+
+/* Fallback: increase selector specificity on outline path elements */
+.mat-form-field-appearance-outline .mat-form-field-outline path[stroke],
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path[stroke] {
+  stroke: var(--app-primary) !important;
+}
+
+/* Extra high-specificity overrides to catch any remaining pink focus styles
+   and ensure inputs/selects/caret/selection use the runtime --app-primary. */
+
+/* Force caret color for inputs/textareas to match theme */
+.mat-input-element:focus,
+textarea.mat-input-element:focus {
+  caret-color: var(--app-primary) !important;
+}
+
+/* Selection highlight for inputs/textareas */
+.mat-input-element::selection,
+textarea::selection {
+  background: rgba(194,24,91,0.12) !important; /* semi-transparent by default; shows nicely across themes */
+}
+
+/* High-specificity path overrides for outline SVG paths (thick + normal) */
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick path,
+.mat-form-field-appearance-outline .mat-form-field-outline path,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick path,
+.mat-form-field-appearance-outline .mat-form-field-outline path[stroke],
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path[stroke] {
+  stroke: var(--app-primary) !important;
+  stroke-opacity: 1 !important;
+  fill: none !important;
+}
+
+/* Remove any leftover box-shadow or pink glow on focus and rely on the outline color */
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
+.mat-form-field.mat-focused .mat-form-field-infix,
+.mat-form-field.mat-focused .mat-form-field-wrapper {
+  box-shadow: none !important;
+}
+
+/* Ensure mat-select arrow/trigger and option focus also follow runtime color */
+.mat-select.mat-focused .mat-select-arrow,
+.mat-select.mat-focused .mat-select-value,
+.mat-select-trigger.mat-focused,
+.mat-select-panel .mat-option.mat-active,
+.mat-select-panel .mat-option.mat-selected {
+  color: var(--app-primary) !important;
+  fill: var(--app-primary) !important;
+  background-color: rgba(0,0,0,0.06) !important;
+}
