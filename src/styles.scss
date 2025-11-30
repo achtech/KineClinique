@@ -519,4 +519,135 @@ button.mat-mdc-icon-button {
   }
 }
 
+/* -------------------------
+   Data table header cells: give them the same background as the left side menu
+   -------------------------
+   Apply the left menu (primary) color to mat header cells and sort headers so table
+   headings visually match the side menu. Also ensure text and icons are readable.
+*/
+.mat-mdc-header-cell,
+th.mat-header-cell,
+.mat-sort-header-container,
+th.mat-sort-header,
+.mat-sort-header .mat-sort-header-content,
+.mat-sort-header .mat-sort-header-arrow,
+.mat-sort-header .mat-sort-header-content {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+  fill: currentColor !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+  font-weight: 700 !important;
+}
+
+/* If the header row uses mat-header-row or custom table header selectors, target them too */
+.mat-mdc-header-row,
+.mat-mdc-header-row .mat-mdc-header-cell,
+thead.mat-mdc-header-row th {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Ensure the sort arrow and indicator remain visible on the colored background */
+.mat-sort-header-arrow,
+.mat-sort-header-stem,
+.mat-sort-header-pointer-left,
+.mat-sort-header-pointer-right,
+.mat-sort-header-pointer-middle {
+  color: var(--app-on-primary) !important;
+  opacity: 1 !important;
+  fill: currentColor !important;
+}
+
+/* Keep header content left-aligned while preserving internal sort button layout */
+th.mat-header-cell .mat-sort-header-container,
+.mat-sort-header-container {
+  justify-content: flex-start;
+}
+
+/* Make sure sticky header shadow/outline contrasts nicely on the colored background */
+.mat-mdc-table .mat-mdc-header-row,
+.mat-mdc-header-row {
+  box-shadow: none !important;
+}
+
+/* -------------------------
+   Outer table container border matching left menu
+   -------------------------
+   Add a border around the whole table (and table container) that uses the app
+   primary color so it visually matches the left side menu background.
+*/
+.mat-mdc-table,
+table.mat-mdc-table,
+.mdc-data-table__table-container,
+.patients-table,
+.mat-table,
+.table-container,
+.md-table-wrapper {
+  border: 1px solid var(--app-primary) !important;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: none !important;
+  background-clip: padding-box;
+}
+
+/* If the table is wrapped by a page-specific container, prefer the outer border there */
+.patients-list-container > .mat-mdc-table,
+.patients-list-container table,
+.patients-list-container .mdc-data-table__table-container {
+  border: 1px solid var(--app-primary) !important;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Keep the table rows' background white so content remains readable */
+.mat-mdc-table tbody,
+.mdc-data-table__content,
+.mat-mdc-table .mat-mdc-row,
+.mat-mdc-table .mat-mdc-cell {
+  background: #ffffff !important;
+  color: inherit !important;
+}
+
+/* Make header corners align nicely with the outer border */
+.mat-mdc-header-row {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/* If the table uses a sticky footer, round the bottom corners too */
+.mdc-data-table__footer,
+.mat-mdc-footer-row,
+.mat-mdc-table tfoot {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* Ensure any inline table wrapper margins don't break the visible border */
+.mdc-data-table__table-container,
+.mat-mdc-table {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Small screens: keep the border but reduce radius slightly */
+@media (max-width: 600px) {
+  .mat-mdc-table,
+  table.mat-mdc-table,
+  .mdc-data-table__table-container {
+    border-radius: 4px;
+  }
+}
+
+/* Small screens: if table header stacks, keep background */
+@media (max-width: 600px) {
+  .mat-mdc-header-cell,
+  th.mat-header-cell,
+  .mat-sort-header-container,
+  .mat-mdc-header-row {
+    background-color: var(--app-primary) !important;
+    color: var(--app-on-primary) !important;
+  }
+}
+
 /* End of file */
