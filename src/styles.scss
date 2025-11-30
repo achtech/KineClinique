@@ -1,259 +1,522 @@
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+/* You can add global styles to this file, and also import other style files */
+@import './material-theme.css';
 
-:root {
-  /* Application theme variable (updated at runtime by ThemeComponent) */
-  --app-primary: #c2185b; /* default pink */
-  --app-on-primary: #ffffff;
-}
-
-/* Map MDC / Material outlined/focused variables to our runtime variable so the
-   prebuilt pink theme uses --app-primary instead of hardcoded pink values.
-   This prevents the imported prebuilt theme from leaving focused input borders pink. */
-html {
-  --mdc-outlined-text-field-focus-outline-color: var(--app-primary);
-  --mdc-outlined-text-field-outline-color: var(--app-primary);
-  --mdc-outlined-text-field-caret-color: var(--app-primary);
-  --mdc-filled-text-field-caret-color: var(--app-primary);
-  --mat-form-field-focus-select-arrow-color: var(--app-primary);
-}
-
-body {
-  font-family: Roboto, Arial, sans-serif;
+/* Reset default browser spacing so the app and its top-level shell fill the viewport.
+   This removes the default body margin and ensures app-root/.app-shell stretch edge-to-edge. */
+html, body, app-root, .app-shell {
+  height: 100%;
+  width: 100%;
   margin: 0;
-  background: #fff0f6;
-  color: #222;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Make focus outlines use the current app primary color */
-*:focus {
-  outline: 2px solid var(--app-primary);
+/* Position dialogs directly under the header (top-aligned)
+   --------------------------------------------------------
+   The app's header/toolbar sits at the top. We align the overlay wrapper to the top
+   (flex-start) and pin dialog panes so modal dialogs appear just below the header
+   instead of centered.
+
+   If your toolbar height is different adjust the --app-dialog-top-offset variable below.
+*/
+:root {
+  --app-dialog-top-offset: 64px; /* adjust to match your toolbar height */
 }
 
-/* Toolbar and primary buttons should reflect the chosen primary color.
-   Force overrides for background-image and background so Material's prebuilt
-   theme gradients don't hide the CSS variable. */
-.mat-toolbar.mat-primary {
-  background-image: none !important;
-  background-color: var(--app-primary) !important;
-  color: var(--app-on-primary) !important;
+/* Responsive dialog offset overrides
+   Keep dialogs positioned just under the header on different screen sizes. */
+@media (max-width: 900px) {
+  :root {
+    --app-dialog-top-offset: 56px;
+  }
 }
 
-/* Buttons that use color="primary" - override wrapper rules too */
-.mat-raised-button.mat-primary,
-.mat-flat-button.mat-primary,
-.mat-stroked-button.mat-primary,
-button.mat-button.mat-primary,
-button[color="primary"] {
-  background-image: none !important;
-  background-color: var(--app-primary) !important;
-  color: var(--app-on-primary) !important;
-  border-color: var(--app-primary) !important;
+@media (max-width: 600px) {
+  :root {
+    --app-dialog-top-offset: 48px;
+  }
 }
 
-/* For buttons where Material applies the color on an inner .mat-button-wrapper */
-.mat-raised-button.mat-primary .mat-button-wrapper,
-.mat-flat-button.mat-primary .mat-button-wrapper,
-.mat-stroked-button.mat-primary .mat-button-wrapper {
-  background-image: none !important;
-  background-color: var(--app-primary) !important;
-  color: var(--app-on-primary) !important;
+@media (min-width: 1200px) {
+  :root {
+    --app-dialog-top-offset: 72px;
+  }
 }
 
-/* Ensure icons in toolbar and buttons use the on-primary color for contrast */
-.mat-toolbar.mat-primary .mat-icon,
-.mat-toolbar.mat-primary button.mat-icon-button,
-.mat-toolbar.mat-primary .mat-button,
-button.mat-primary .mat-icon,
-.mat-raised-button.mat-primary .mat-icon {
-  color: var(--app-on-primary) !important;
+/* Ensure overlay wrappers align overlays to the top of the page */
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important; /* align overlays to top */
 }
 
-/* Make primary icon color consistent where appropriate (e.g., active menu) */
-.side-menu a.active-menu .mat-icon,
-.side-menu a.active-menu .mat-list-text,
-.side-menu a.active-menu span {
-  color: var(--app-primary) !important;
-  font-weight: 700;
+/* Extra guard for inline wrapper styles */
+.cdk-global-overlay-wrapper[style*="flex-start"],
+.cdk-global-overlay-wrapper[style*="align-items: flex-start"] {
+  align-items: flex-start !important;
 }
 
-/* Links / accents */
-a, a:visited, a:active {
-  color: var(--app-primary);
-  text-decoration: underline;
+/* Primary approach: pin dialog panes under the header using fixed positioning.
+   This overrides inline styles like margin-top/top that runtime code sometimes sets.
+   We center horizontally and position at a fixed top offset so dialogs don't get
+   vertically centered behind the toolbar. */
+body .cdk-overlay-pane.mat-mdc-dialog-panel,
+body .cdk-overlay-pane[role="dialog"],
+body .cdk-overlay-container .cdk-overlay-pane {
+  position: fixed !important;
+  top: var(--app-dialog-top-offset) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  align-self: flex-start !important;
+  max-height: calc(100vh - (var(--app-dialog-top-offset) + 16px)) !important;
+  overflow: auto !important;
+  box-sizing: border-box !important;
+  z-index: 2000 !important; /* ensure dialogs float above other overlays */
 }
 
-/* Restore default scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  background: #eee;
-}
-::-webkit-scrollbar-thumb {
-  background: #bbb;
+/* Extra guard: if any overlay pane carries an inline margin-top or top, override it */
+body .cdk-overlay-pane[style*="margin-top"],
+body .cdk-overlay-pane[style*="top:"] {
+  margin-top: 0 !important;
+  top: var(--app-dialog-top-offset) !important;
+  align-self: flex-start !important;
+  position: fixed !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
 
-/* Ensure any element using the app primary variable gets the expected contrast when used as text color */
-.text-on-primary {
-  color: var(--app-on-primary) !important;
+/* Dialog surface and wrapper adjustments to keep content visible and not pushed down */
+.cdk-overlay-pane.mat-mdc-dialog-panel,
+.mat-mdc-dialog-container,
+.cdk-global-overlay-wrapper > .cdk-overlay-pane {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+
+/* Keep dialog surfaces from exceeding viewport below the header */
+.cdk-overlay-pane.mat-mdc-dialog-panel .mdc-dialog__surface,
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  max-height: calc(100vh - (var(--app-dialog-top-offset) + 16px)) !important;
+  box-sizing: border-box !important;
+  overflow: auto !important;
+}
+
+/* Dialog/input sizing adjustments — make controls comfortable in dialogs */
+.cdk-overlay-pane .mat-mdc-input-element,
+.cdk-overlay-pane .mat-input-element,
+.mat-mdc-dialog-container .mat-mdc-input-element,
+.mat-mdc-dialog-container .mat-input-element,
+body .cdk-overlay-pane .mat-mdc-input-element,
+body .cdk-overlay-pane .mat-input-element {
+  height: 48px !important;
+  padding: 12px 12px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Make selects in dialogs visually consistent with inputs */
+.cdk-overlay-pane .mat-mdc-select-trigger,
+.mat-mdc-dialog-container .mat-mdc-select-trigger,
+body .cdk-overlay-pane .mat-mdc-select-trigger {
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 6px 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure overlay backdrop and container don't conflict */
+.cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
+  /* leave backdrop behavior as-is; z-index is handled on overlay pane */
+}
+
+/* Shared filter-panel styles used across list pages (Patients, Appointments, Billing, Staff, etc.)
+   Move these here so every page with a .filter-panel/.filter-panel-left/.filter-panel-right
+   will get the same appearance and behavior. */
+
+/* Panel container */
+.filter-panel {
   background: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  padding: 12px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Keep any previously added 'pink theme' related tweaks minimal but allow the JS theme to override visually */
-
-/* Override Angular Material input/select colors so they follow the runtime
-   CSS variable (--app-primary) instead of the hardcoded pink from the imported
-   prebuilt theme. These rules target the common parts used by mat-form-field
-   (outline, ripple, label) and mat-select so the accent color comes from the
-   selected theme color at runtime. */
-
-.mat-form-field-appearance-outline .mat-form-field-outline,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  /* outline is an SVG path in Material; setting stroke covers that case */
-  stroke: var(--app-primary) !important;
-  color: var(--app-primary) !important;
-  border-color: var(--app-primary) !important;
+/* Left area grows to take available space */
+.filter-panel-left {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0; /* allow inputs to shrink inside flex */
 }
 
-/* The underline / ripple that appears on focused inputs */
-.mat-form-field .mat-form-field-ripple,
-.mat-form-field.mat-focused .mat-form-field-ripple,
-.mat-form-field-appearance-standard .mat-form-field-underline,
-.mat-form-field-appearance-standard.mat-focused .mat-form-field-underline {
+/* Keep the action area aligned on the right */
+.filter-panel-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 12px;
+  gap: 12px;
+}
+
+/* Make form-fields inside the panel expand sensibly */
+.filter-panel .mat-form-field,
+.filter-panel .search-field,
+.filter-panel-left .mat-form-field {
+  width: 100%;
+  max-width: 640px;
+  min-width: 0;
+}
+
+/* Make the input visually fit on a colored background */
+.filter-panel .mat-mdc-text-field-wrapper,
+.filter-panel .mat-mdc-form-field-infix {
+  background: transparent !important;
+}
+
+/* Ensure icons, labels and select arrows are readable on the colored background */
+.filter-panel .mat-mdc-floating-label,
+.filter-panel .mat-mdc-select-arrow,
+.filter-panel .mat-mdc-select-value,
+.filter-panel .mat-mdc-form-field-infix,
+.filter-panel .mat-mdc-input-element,
+.filter-panel .mat-input-element,
+.filter-panel .mat-icon {
+  color: var(--app-on-primary) !important;
+  fill: currentColor !important;
+}
+
+/* Search / input tweaks for better contrast and touch targets */
+.filter-panel .mat-mdc-input-element,
+.filter-panel .mat-input-element {
+  height: 44px !important;
+  padding: 10px 12px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border-radius: 6px;
+  color: var(--app-on-primary) !important;
+  box-sizing: border-box !important;
+}
+
+/* Make selects in the panel taller and vertically centered */
+.filter-panel .mat-mdc-select-trigger,
+.filter-panel .mat-mdc-select-value,
+.filter-panel .mat-mdc-select-arrow-wrapper {
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 6px 8px !important;
+  box-sizing: border-box !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Ensure the suffix clear button / icons are visible */
+.filter-panel .mat-mdc-form-field .mat-icon,
+.filter-panel .mat-icon-button .mat-icon {
+  color: var(--app-on-primary) !important;
+}
+
+/* Small responsive behavior: stack on narrow screens */
+@media (max-width: 900px) {
+  .filter-panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+  .filter-panel-right {
+    justify-content: space-between;
+    margin-left: 0;
+  }
+  .filter-panel-left {
+    width: 100%;
+  }
+}
+
+/* A lightweight fallback style so any page that uses .patients-list-container or similar
+   continues to look consistent even if not overridden locally. */
+.patients-list-container {
+  background: #fff;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  box-sizing: border-box;
+}
+
+/* -------------------------
+   Additional global tweaks
+   ------------------------- */
+
+/* These target button coloring so buttons remain readable even when the side menu is dark.
+   If you want to invert button colors when the app uses a dark side menu, add the
+   `side-menu-black` class to the <body> element (js can toggle this when menu theme changes).
+*/
+
+/* Default: make Mat buttons use the left-side menu background so buttons match the side menu */
+.mat-mdc-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-icon-button,
+button.mat-mdc-button,
+button.mat-mdc-raised-button,
+button.mat-mdc-unelevated-button,
+button.mat-mdc-outlined-button {
   background-color: var(--app-primary) !important;
-}
-
-/* Labels (floating and normal) */
-.mat-form-field-label,
-.mat-form-field.mat-focused .mat-form-field-label {
-  color: var(--app-primary) !important;
-}
-
-/* Placeholder/text accent for inputs when focused */
-.mat-input-element:focus,
-.mat-form-field.mat-focused .mat-input-element {
-  color: inherit; /* don't force text color */
-}
-
-/* Select arrow and selected option highlight */
-.mat-select-arrow,
-.mat-select-value,
-.mat-select-trigger {
-  color: var(--app-primary) !important;
-}
-
-.mat-select-panel .mat-option.mat-selected {
-  background-color: rgba(0,0,0,0.06);
-}
-
-/* If other components still use the prebuilt theme variables, force their
-   primary color to our runtime variable where safe */
-.mat-accent, .mat-warn {
-  /* keep existing behavior for accent/warn — only override primary where needed */
-}
-
-/* Ensure focus outlines that rely on box-shadow also use the app variable */
-.mat-form-field.mat-focused .mat-form-field-wrapper,
-.mat-form-field.mat-focused .mat-form-field-infix {
+  color: var(--app-on-primary) !important;
+  border-color: transparent !important;
   box-shadow: none !important;
 }
 
-/* Last-resort rule to catch remaining pinks from the prebuilt theme on inputs */
-.mat-form-field, .mat-input-element, .mat-select {
-  --material-primary: var(--app-primary);
+/* Ensure icons inside buttons follow button color */
+.mat-mdc-button .mat-icon,
+.mat-mdc-unelevated-button .mat-icon,
+.mat-mdc-raised-button .mat-icon,
+.mat-mdc-outlined-button .mat-icon,
+.mat-mdc-icon-button .mat-icon {
+  color: inherit !important;
+  fill: currentColor !important;
 }
 
-/* Strong overrides to ensure focused/active inputs use the runtime --app-primary color.
-   These target the SVG outline path, outline-thick, ripple/underline, labels and select arrow
-   so any remaining pinks from the prebuilt theme are overridden. */
-.mat-form-field.mat-focused .mat-form-field-outline path,
-.mat-form-field-appearance-outline .mat-form-field-outline path,
-.mat-form-field.mat-focused .mat-form-field-outline,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  stroke: var(--app-primary) !important;
-  color: var(--app-primary) !important;
-  border-color: var(--app-primary) !important;
+/* Hover / focus affordances */
+.mat-mdc-button:hover,
+.mat-mdc-unelevated-button:hover,
+.mat-mdc-raised-button:hover,
+.mat-mdc-outlined-button:hover,
+.mat-mdc-icon-button:hover {
+  filter: brightness(0.92) !important;
 }
 
-/* Focused/floating labels */
-.mat-form-field.mat-focused .mat-form-field-label,
-.mat-form-field-label.mat-focused {
-  color: var(--app-primary) !important;
+.mat-mdc-button:focus,
+.mat-mdc-unelevated-button:focus,
+.mat-mdc-raised-button:focus,
+.mat-mdc-outlined-button:focus,
+.mat-mdc-icon-button:focus {
+  outline: 2px solid rgba(255,255,255,0.12) !important;
 }
 
-/* Ripple / underline */
-.mat-form-field.mat-focused .mat-form-field-ripple,
-.mat-form-field.mat-focused .mat-form-field-underline,
-.mat-form-field .mat-form-field-ripple {
-  background-color: var(--app-primary) !important;
-}
-
-/* Ensure mat-select arrow / trigger follow the runtime color when focused/active */
-.mat-select.mat-focused .mat-select-arrow,
-.mat-select.mat-focused .mat-select-value,
-.mat-select-trigger.mat-focused {
-  color: var(--app-primary) !important;
-  fill: var(--app-primary) !important;
-}
-
-/* Inputs / textareas focus: remove leftover pink box-shadow and keep focus indication using variable */
-.mat-input-element:focus,
-textarea.mat-input-element:focus,
-.mat-form-field.mat-focused .mat-form-field-infix {
-  outline: none !important;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0) !important;
-}
-
-/* Fallback: increase selector specificity on outline path elements */
-.mat-form-field-appearance-outline .mat-form-field-outline path[stroke],
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path[stroke] {
-  stroke: var(--app-primary) !important;
-}
-
-/* Extra high-specificity overrides to catch any remaining pink focus styles
-   and ensure inputs/selects/caret/selection use the runtime --app-primary. */
-
-/* Force caret color for inputs/textareas to match theme */
-.mat-input-element:focus,
-textarea.mat-input-element:focus {
-  caret-color: var(--app-primary) !important;
-}
-
-/* Selection highlight for inputs/textareas */
-.mat-input-element::selection,
-textarea::selection {
-  background: rgba(194,24,91,0.12) !important; /* semi-transparent by default; shows nicely across themes */
-}
-
-/* High-specificity path overrides for outline SVG paths (thick + normal) */
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick path,
-.mat-form-field-appearance-outline .mat-form-field-outline path,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick path,
-.mat-form-field-appearance-outline .mat-form-field-outline path[stroke],
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline path[stroke] {
-  stroke: var(--app-primary) !important;
-  stroke-opacity: 1 !important;
-  fill: none !important;
-}
-
-/* Remove any leftover box-shadow or pink glow on focus and rely on the outline color */
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
-.mat-form-field.mat-focused .mat-form-field-infix,
-.mat-form-field.mat-focused .mat-form-field-wrapper {
+/* Invert buttons when the body has `side-menu-black` (useful if the side menu is dark) */
+body.side-menu-black .mat-mdc-button,
+body.side-menu-black .mat-mdc-unelevated-button,
+body.side-menu-black .mat-mdc-raised-button,
+body.side-menu-black .mat-mdc-outlined-button,
+body.side-menu-black .mat-mdc-icon-button,
+body.side-menu-black button.mat-mdc-button,
+body.side-menu-black button.mat-mdc-raised-button,
+body.side-menu-black button.mat-mdc-unelevated-button,
+body.side-menu-black button.mat-mdc-outlined-button {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #e0e0e0 !important;
   box-shadow: none !important;
 }
 
-/* Ensure mat-select arrow/trigger and option focus also follow runtime color */
-.mat-select.mat-focused .mat-select-arrow,
-.mat-select.mat-focused .mat-select-value,
-.mat-select-trigger.mat-focused,
-.mat-select-panel .mat-option.mat-active,
-.mat-select-panel .mat-option.mat-selected {
-  color: var(--app-primary) !important;
-  fill: var(--app-primary) !important;
-  background-color: rgba(0,0,0,0.06) !important;
+body.side-menu-black .mat-mdc-button:hover,
+body.side-menu-black .mat-mdc-unelevated-button:hover,
+body.side-menu-black .mat-mdc-raised-button:hover,
+body.side-menu-black .mat-mdc-outlined-button:hover,
+body.side-menu-black .mat-mdc-icon-button:hover {
+  filter: brightness(0.96) !important;
 }
+
+/* Ensure buttons on the primary-colored filter-panel remain readable */
+.filter-panel .mat-mdc-button,
+.filter-panel .mat-mdc-raised-button,
+.filter-panel .mat-mdc-unelevated-button,
+.filter-panel .mat-mdc-icon-button {
+  /* match panel background so panel buttons visually blend with the panel */
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* If both body.side-menu-black and panel button, prefer the panel styling */
+body.side-menu-black .filter-panel .mat-mdc-button,
+body.side-menu-black .filter-panel .mat-mdc-raised-button,
+body.side-menu-black .filter-panel .mat-mdc-unelevated-button,
+body.side-menu-black .filter-panel .mat-mdc-icon-button {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Action icon buttons inside data tables: make them flat and color icons with app-primary */
+.mat-mdc-table button[mat-icon-button],
+.mdc-data-table button[mat-icon-button],
+.mat-mdc-table .mat-mdc-icon-button,
+.mdc-data-table__row button[mat-icon-button],
+.mat-mdc-table td .mat-mdc-icon-button {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--app-primary) !important;
+}
+
+/* Ensure icon elements inside those buttons use the same color */
+.mat-mdc-table button[mat-icon-button] .mat-icon,
+.mdc-data-table button[mat-icon-button] .mat-icon,
+.mat-mdc-table .mat-mdc-icon-button .mat-icon,
+.mdc-data-table__row button[mat-icon-button] .mat-icon,
+.mat-mdc-table td .mat-mdc-icon-button .mat-icon {
+  color: var(--app-primary) !important;
+  fill: currentColor !important;
+}
+
+/* Keep hover/focus states subtle (no solid background), but preserve focus outline for accessibility */
+.mat-mdc-table button[mat-icon-button]:hover,
+.mdc-data-table button[mat-icon-button]:hover,
+.mat-mdc-table .mat-mdc-icon-button:hover,
+.mdc-data-table__row button[mat-icon-button]:hover {
+  background: transparent !important;
+  filter: none !important;
+}
+
+.mat-mdc-table button[mat-icon-button]:focus,
+.mdc-data-table button[mat-icon-button]:focus,
+.mat-mdc-table .mat-mdc-icon-button:focus,
+.mdc-data-table__row button[mat-icon-button]:focus {
+  outline: 2px solid rgba(var(--app-primary-rgb, 25,118,210), 0.12) !important;
+  outline-offset: 2px !important;
+}
+
+/* Paginator navigation icon buttons: make them flat and use the app primary color */
+.mat-mdc-paginator .mat-mdc-paginator-icon,
+.mat-mdc-paginator .mat-mdc-paginator-navigation-next,
+.mat-mdc-paginator .mat-mdc-paginator-navigation-previous,
+.mat-mdc-paginator .mat-mdc-paginator-navigation-first,
+.mat-mdc-paginator .mat-mdc-paginator-navigation-last,
+.mat-mdc-paginator .mat-mdc-paginator-range-actions button[mat-icon-button],
+.mat-mdc-paginator .mat-mdc-paginator-range-actions .mat-mdc-icon-button {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--app-primary) !important;
+  fill: currentColor !important;
+}
+
+/* Ensure SVG icons inside paginator buttons inherit the color */
+.mat-mdc-paginator .mat-mdc-paginator-icon svg,
+.mat-mdc-paginator button[mat-icon-button] svg,
+.mat-mdc-paginator .mat-mdc-paginator-range-actions svg {
+  fill: currentColor !important;
+  color: inherit !important;
+}
+
+/* Disabled paginator icons should be muted but keep no background */
+.mat-mdc-paginator button[mat-icon-button][disabled],
+.mat-mdc-paginator .mat-mdc-paginator-navigation-previous[disabled],
+.mat-mdc-paginator .mat-mdc-paginator-navigation-next[disabled],
+.mat-mdc-paginator .mat-mdc-paginator-navigation-first[disabled],
+.mat-mdc-paginator .mat-mdc-paginator-navigation-last[disabled] {
+  color: rgba(0,0,0,0.38) !important;
+  opacity: 0.6 !important;
+}
+
+/* Keep hover/focus states subtle (no solid background) while preserving focus outline */
+.mat-mdc-paginator button[mat-icon-button]:hover,
+.mat-mdc-paginator .mat-mdc-paginator-icon:hover,
+.mat-mdc-paginator .mat-mdc-paginator-range-actions button[mat-icon-button]:hover {
+  background: transparent !important;
+  filter: none !important;
+}
+
+.mat-mdc-paginator button[mat-icon-button]:focus,
+.mat-mdc-paginator .mat-mdc-paginator-range-actions button[mat-icon-button]:focus {
+  outline: 2px solid rgba(var(--app-primary-rgb, 25,118,210), 0.12) !important;
+  outline-offset: 2px !important;
+}
+
+/* -------------------------
+   Global "New" button styling
+   ------------------------- */
+button.app-new-button,
+.filter-panel-right button[mat-raised-button],
+.filter-panel-right .mat-mdc-raised-button {
+  background: #ffffff !important;
+  color: var(--app-primary) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.16) !important;
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+  padding: 16px 36px !important;
+  border-radius: 8px !important;
+  min-width: 180px !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+}
+
+/* Hover/active states keep contrast and add a subtle lift */
+button.app-new-button:hover,
+.filter-panel-right button[mat-raised-button]:hover,
+.filter-panel-right .mat-mdc-raised-button:hover {
+  background: #ffffff !important;
+  transform: translateY(-2px);
+  filter: brightness(0.98);
+}
+
+/* Make sure icon-only buttons are not affected by the size rules above */
+button.mat-icon-button,
+button.mat-mdc-icon-button {
+  min-width: initial !important;
+  padding: initial !important;
+}
+
+/* -------------------------
+   List header styling
+   ------------------------- 
+   Make the header/toolbars used at the top of list pages left-aligned and bold.
+   Background removed so headers blend with the page and the title appears at the left.
+*/
+.container .toolbar,
+.patients-list-container .toolbar,
+.appointments-list-container .toolbar,
+.billing-list-container .toolbar,
+.prescriptions-list-container .toolbar,
+.staff-list-container .toolbar,
+.sessions-list-container .toolbar {
+  background: transparent !important;
+  color: inherit !important;
+  border-radius: 0 !important;
+  padding: 8px 0 8px 0; /* keep vertical spacing but remove heavy horizontal padding */
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* left align content */
+  gap: 12px;
+}
+
+/* Ensure the title inside those toolbars is readable */
+.container .toolbar .page-title,
+.patients-list-container .toolbar .page-title,
+.appointments-list-container .toolbar .page-title,
+.billing-list-container .toolbar .page-title,
+.prescriptions-list-container .toolbar .page-title,
+.staff-list-container .toolbar .page-title,
+.sessions-list-container .toolbar .page-title {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Small screens: make the toolbar spacing comfortable */
+@media (max-width: 900px) {
+  .container .toolbar,
+  .patients-list-container .toolbar,
+  .appointments-list-container .toolbar,
+  .billing-list-container .toolbar,
+  .prescriptions-list-container .toolbar,
+  .staff-list-container .toolbar,
+  .sessions-list-container .toolbar {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* End of file */

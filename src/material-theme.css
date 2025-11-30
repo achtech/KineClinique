@@ -1,0 +1,129 @@
+/* Local replacement of the prebuilt Material theme (pink-bluegrey) but without pink.
+   This file supplies the common CSS custom properties Material components expect,
+   with the primary/focus color set to an indigo tone (25,118,210) by default.
+   Adjust --app-primary in src/styles.scss (or here) to change the app primary color. */
+
+/* App runtime variables */
+:root {
+  --app-primary: #1976d2; /* indigo */
+  --app-primary-rgb: 25, 118, 210;
+  --app-on-primary: #ffffff;
+
+  /* Basic material/ripple defaults */
+  --mat-ripple-color: rgba(255, 255, 255, 0.1);
+
+  /* Primary / focus color replacements (replacing pink with indigo) */
+  --mdc-filled-text-field-focus-label-text-color: rgba(var(--app-primary-rgb), 0.87);
+  --mdc-outlined-text-field-focus-label-text-color: rgba(var(--app-primary-rgb), 0.87);
+  --mdc-filled-text-field-focus-active-indicator-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-filled-text-field-active-indicator-color: rgba(255, 255, 255, 0.42);
+  --mdc-outlined-text-field-focus-outline-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-outlined-text-field-focus-label-text-color: rgba(var(--app-primary-rgb), 0.87);
+
+  /* Form-field / select focus arrow */
+  --mat-form-field-focus-select-arrow-color: rgba(var(--app-primary-rgb), 0.87);
+
+  /* Slider / progress active indicator */
+  --mdc-linear-progress-active-indicator-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-slider-active-track-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-slider-focus-state-layer-color: rgba(var(--app-primary-rgb), 0.2);
+
+  /* Datepicker / calendar focus */
+  --mat-datepicker-calendar-date-focus-state-background-color: rgba(var(--app-primary-rgb), 0.3);
+  --mat-datepicker-calendar-date-hover-state-background-color: rgba(var(--app-primary-rgb), 0.3);
+
+  /* Tab / chip / checkbox / radio focus colors where appropriate */
+  --mdc-tab-indicator-active-indicator-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-chip-focus-state-layer-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-checkbox-selected-focus-state-layer-color: rgba(var(--app-primary-rgb), 1);
+  --mdc-radio-selected-focus-icon-color: rgba(var(--app-primary-rgb), 1);
+
+  /* Dialog sizes (keep reasonable defaults used by Material) */
+  --mdc-dialog-container-elevation-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  --mat-dialog-container-max-width: 80vw;
+  --mat-dialog-container-small-max-width: 80vw;
+}
+
+/* Basic component color mapping so components using prebuilt theme variables remain usable */
+
+/* Toolbar */
+.mat-toolbar.mat-primary {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+}
+
+/* Buttons that depend on primary variables */
+.mat-raised-button.mat-primary,
+.mat-flat-button.mat-primary,
+.mat-stroked-button.mat-primary,
+button.mat-button.mat-primary,
+button[color="primary"] {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+  border-color: var(--app-primary) !important;
+}
+
+/* Ripple default uses current theme's ripple color */
+.mat-ripple-element {
+  background-color: var(--mat-ripple-color, rgba(0,0,0,0.1)) !important;
+}
+
+/* Form fields: provide sensible default label / input colors for dark/light backgrounds.
+   Material components will also pick up the custom properties above for focused states. */
+.mat-form-field .mat-form-field-label,
+.mat-form-field .mat-placeholder,
+.mat-form-field .mat-hint {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Outline stroke default (will be overridden on focus using the above variables) */
+.mat-form-field-appearance-outline .mat-form-field-outline path,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick path {
+  stroke: rgba(0,0,0,0.12);
+}
+
+/* Mat-select panel default */
+.mat-select-panel {
+  background-color: #fff;
+  color: #222;
+}
+
+/* Ensure inputs caret uses the desired caret color when focused if not overridden elsewhere */
+.mat-input-element:focus,
+textarea.mat-input-element:focus {
+  caret-color: var(--mdc-outlined-text-field-caret-color, #000) !important;
+}
+
+/* Provide a neutral background for dialogs (so dialog contents are readable by default) */
+.mat-dialog-container {
+  background: #ffffff;
+  color: #222222;
+}
+
+/* Ensure selected options are readable */
+.mat-select-panel .mat-option.mat-selected {
+  background-color: rgba(0,0,0,0.06);
+}
+
+/* Accessibility helpers */
+.mat-icon, .mat-button .mat-icon {
+  color: inherit;
+}
+
+/* If components still attempt to use prebuilt pink variables, override the pink rgba directly
+   to the indigo family so residual rules don't show pink. This mirrors the common pink used
+   in the original prebuilt theme (rgba(194, 24, 91, ...)). */
+:root {
+  --_replace-pink-rgb: 194, 24, 91;
+  --_indigo-rgb: var(--app-primary-rgb);
+}
+
+/* A small set of direct overrides for CSS tokens that older prebuilt CSS may use */
+html {
+  /* Replace the default "focus label pink" with indigo */
+  --mdc-filled-text-field-focus-label-text-color: rgba(var(--_indigo-rgb), 0.87);
+  --mdc-outlined-text-field-focus-label-text-color: rgba(var(--_indigo-rgb), 0.87);
+  --mat-form-field-focus-select-arrow-color: rgba(var(--_indigo-rgb), 0.87);
+}
+
+/* End of material-theme.css */

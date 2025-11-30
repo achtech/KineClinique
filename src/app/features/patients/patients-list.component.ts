@@ -119,12 +119,38 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
     return value != null ? value.toString().toLowerCase() : '';
   }
 
-  openCreate(){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'create' } }); }
+  // Open dialog at a fixed, centered width so it doesn't appear pinned to the bottom
+  // and add an explicit top position and panelClass as robust fallbacks.
+  openCreate(){
+    this.dialog.open(PatientDialogDialogComponent, {
+      width: '900px',
+      maxWidth: '900px',
+      position: { top: '10vh' },
+      panelClass: 'patient-dialog-panel',
+      data: { mode: 'create' }
+    });
+  }
 
-  openEdit(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'edit', item } }); }
+  openEdit(item: any){
+    this.dialog.open(PatientDialogDialogComponent, {
+      width: '900px',
+      maxWidth: '900px',
+      position: { top: '10vh' },
+      panelClass: 'patient-dialog-panel',
+      data: { mode: 'edit', item }
+    });
+  }
 
   // new: open details dialog (read-only view)
-  openDetails(item: any){ this.dialog.open(PatientDialogDialogComponent, { width: '95vw', maxWidth: 'none', data: { mode: 'details', item } }); }
+  openDetails(item: any){
+    this.dialog.open(PatientDialogDialogComponent, {
+      width: '900px',
+      maxWidth: '900px',
+      position: { top: '10vh' },
+      panelClass: 'patient-dialog-panel',
+      data: { mode: 'details', item }
+    });
+  }
 
   delete(item: any){
     const message = this.translation.translate('common.confirmDelete');
