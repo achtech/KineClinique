@@ -102,15 +102,17 @@ body .cdk-overlay-pane[style*="top:"] {
   max-height: calc(100vh - (var(--app-dialog-top-offset) + 16px)) !important;
   box-sizing: border-box !important;
   overflow: auto !important;
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
 }
 
 /* Dialog/input sizing adjustments — make controls comfortable in dialogs */
 .cdk-overlay-pane .mat-mdc-input-element,
 .cdk-overlay-pane .mat-input-element,
 .mat-mdc-dialog-container .mat-mdc-input-element,
-.mat-mdc-dialog-container .mat-input-element,
+.mat-mdc-dialog-container .mat-mdc-input-element,
 body .cdk-overlay-pane .mat-mdc-input-element,
-body .cdk-overlay-pane .mat-input-element {
+body .cdk-overlay-pane .mat-mdc-input-element {
   height: 48px !important;
   padding: 12px 12px !important;
   font-size: 16px !important;
@@ -564,7 +566,7 @@ th.mat-header-cell .mat-sort-header-container,
   justify-content: flex-start;
 }
 
-/* Make sure sticky header shadow/outline contrasts nicely on the colored background */
+/* Make sure sticky header shadow/outline contrasts nicely with the outer border */
 .mat-mdc-table .mat-mdc-header-row,
 .mat-mdc-header-row {
   box-shadow: none !important;
@@ -648,6 +650,12 @@ table.mat-mdc-table,
     background-color: var(--app-primary) !important;
     color: var(--app-on-primary) !important;
   }
+}
+
+/* Make top menu dropdowns (mat-menu) match the left menu background */
+.mat-mdc-menu-panel, .mat-menu-panel {
+  background-color: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
 }
 
 /* End of file */
