@@ -1,0 +1,25 @@
+<h2 mat-dialog-title style="margin-bottom: 8px;">
+  {{ data.mode === 'edit' ? ('companyExpenses.dialog.editTitle' | translate) : ('companyExpenses.dialog.createTitle' | translate) }}
+</h2>
+<form [formGroup]="expenseForm" (ngSubmit)="onSave()" mat-dialog-content>
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'companyExpenses.columns.date' | translate }}</mat-label>
+    <input matInput type="date" formControlName="date" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'companyExpenses.columns.label' | translate }}</mat-label>
+    <input matInput formControlName="label" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'companyExpenses.columns.montant' | translate }}</mat-label>
+    <input matInput type="number" formControlName="montant" required min="0" />
+  </mat-form-field>
+</form>
+<mat-dialog-actions align="end" style="margin-top: 8px;">
+  <button mat-button (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!expenseForm.valid">
+    {{ data.mode === 'edit' ? ('common.save' | translate) : ('common.new' | translate) }}
+  </button>
+</mat-dialog-actions>

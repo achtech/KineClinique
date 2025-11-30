@@ -1,0 +1,38 @@
+<h2 mat-dialog-title style="margin-bottom: 8px;">
+  {{ data ? 'Modifier le tarif' : 'Ajouter un tarif' }}
+</h2>
+<form [formGroup]="tarifForm" (ngSubmit)="onSave()" mat-dialog-content>
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type" required>
+      <mat-option *ngFor="let option of typeOptions" [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>Prestation</mat-label>
+    <input matInput formControlName="prestation" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>Montant</mat-label>
+    <input matInput type="number" formControlName="montant" required min="0" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>Lieu</mat-label>
+    <mat-select formControlName="place" required>
+      <mat-option *ngFor="let option of placeOptions" [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+<mat-dialog-actions align="end" style="margin-top: 8px;">
+  <button mat-button (click)="onCancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!tarifForm.valid">
+    {{ data ? 'Enregistrer' : 'Ajouter' }}
+  </button>
+</mat-dialog-actions>

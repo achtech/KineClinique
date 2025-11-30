@@ -161,7 +161,7 @@ th, td, .mat-header-cell, .mat-cell {
   gap: 24px;
 }
 
-.filter-panel-left {
+filter-panel-left {
   flex: 1 1 0;
   display: flex;
   align-items: center;
@@ -236,4 +236,11 @@ th, .mat-form-field {
   background: var(--app-primary-bg) !important;
   color: var(--app-primary) !important;
   font-weight: bold;
+}
+
+/* Make the app logo bigger */
+.app-logo {
+  width: 150px;
+  height: auto;
+  display: block;
 }

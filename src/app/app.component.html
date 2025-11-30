@@ -6,7 +6,7 @@
   <ng-container *ngIf="!isLoginRoute; else loginOnly">
     <!-- TOP BAR -->
     <mat-toolbar color="primary" class="top-toolbar">
-      <span class="app-name">{{ 'app.name' | translate }}</span>
+      <img src="assets/img/logo2.png" alt="{{ 'app.name' | translate }}" class="app-logo" />
       <span style="flex: 1 1 auto;"></span>
 
       <!-- Notifications Menu -->
@@ -83,6 +83,22 @@
         <a mat-list-item routerLink="/billing" routerLinkActive="active-menu">
           <mat-icon>receipt</mat-icon>
           <span>{{ 'nav.billing' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/tarifs" routerLinkActive="active-menu">
+          <mat-icon>euro_symbol</mat-icon>
+          <span>{{ 'nav.tarifs' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/company-expenses" routerLinkActive="active-menu">
+          <mat-icon>account_balance_wallet</mat-icon>
+          <span>{{ 'companyExpenses.list.title' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/stock" routerLinkActive="active-menu">
+          <mat-icon>inventory</mat-icon>
+          <span>{{ 'stock.list.title' | translate }}</span>
+        </a>
+        <a mat-list-item routerLink="/store" routerLinkActive="active-menu">
+          <mat-icon>storefront</mat-icon>
+          <span>{{ 'store.list.title' | translate }}</span>
         </a>
         <a mat-list-item routerLink="/staff" routerLinkActive="active-menu">
           <mat-icon>group</mat-icon>

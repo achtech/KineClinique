@@ -2,6 +2,7 @@
   <span class="page-title" style="font-size: 1.5rem; font-weight: 500;">{{ 'staff.list.title' | translate }}</span>
 </div>
 
+
 <div class="filter-panel">
   <div class="filter-panel-left">
     <mat-form-field appearance="outline" class="search-field">
@@ -52,7 +53,7 @@
     </td>
   </ng-container>
 
-    <thead>
+  <thead>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr class="filter-row">
         <th *ngFor="let col of displayedColumns">

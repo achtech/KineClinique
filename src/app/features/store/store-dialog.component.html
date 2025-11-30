@@ -1,0 +1,35 @@
+<h2 mat-dialog-title style="margin-bottom: 8px;">
+  {{ data.mode === 'edit' ? ('store.dialog.editTitle' | translate) : ('store.dialog.createTitle' | translate) }}
+</h2>
+<form [formGroup]="storeForm" (ngSubmit)="onSave()" mat-dialog-content>
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'store.columns.productId' | translate }}</mat-label>
+    <input matInput formControlName="productId" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'store.columns.dateOperation' | translate }}</mat-label>
+    <input matInput type="date" formControlName="dateOperation" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'store.columns.quantity' | translate }}</mat-label>
+    <input matInput type="number" formControlName="quantity" required min="0" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'store.columns.prixVente' | translate }}</mat-label>
+    <input matInput type="number" formControlName="prixVente" required min="0" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>{{ 'store.columns.comment' | translate }}</mat-label>
+    <textarea matInput formControlName="comment"></textarea>
+  </mat-form-field>
+</form>
+<mat-dialog-actions align="end" style="margin-top: 8px;">
+  <button mat-button (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!storeForm.valid">
+    {{ data.mode === 'edit' ? ('common.save' | translate) : ('common.new' | translate) }}
+  </button>
+</mat-dialog-actions>

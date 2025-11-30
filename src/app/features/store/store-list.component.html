@@ -1,0 +1,53 @@
+<div class="toolbar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+  <span class="page-title" style="font-size: 1.5rem; font-weight: 500;">{{ 'store.list.title' | translate }}</span>
+</div>
+
+<div class="filter-panel">
+  <div class="filter-panel-left">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>{{ 'common.searchLabel' | translate }}</mat-label>
+      <input matInput [placeholder]="'common.searchPlaceholder' | translate" (keyup)="applyGlobalFilter($event)">
+      <button mat-icon-button *ngIf="globalFilter" matSuffix (click)="applyGlobalFilter({ target: { value: '' } })" tabindex="-1">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="filter-panel-right">
+    <button mat-raised-button color="primary" (click)="openCreate()">{{ 'common.new' | translate }}</button>
+  </div>
+</div>
+
+<div style="width:100%; margin-top:12px;">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%;">
+    <ng-container matColumnDef="productId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'store.columns.productId' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{ e.productId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="dateOperation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'store.columns.dateOperation' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{ e.dateOperation }}</td>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'store.columns.quantity' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{ e.quantity }}</td>
+    </ng-container>
+    <ng-container matColumnDef="prixVente">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'store.columns.prixVente' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{ e.prixVente | currency:'MAD':'symbol':'1.0-0' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="comment">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'store.columns.comment' | translate }}</th>
+      <td mat-cell *matCellDef="let e">{{ e.comment }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | translate }}</th>
+      <td mat-cell *matCellDef="let e">
+        <button mat-icon-button (click)="openEdit(e)" matTooltip="{{ 'common.edit' | translate }}" matTooltipPosition="above"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="delete(e)" matTooltip="{{ 'common.delete' | translate }}" matTooltipPosition="above"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>
