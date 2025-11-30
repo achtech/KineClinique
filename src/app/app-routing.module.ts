@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PatientsListComponent } from './features/patients/patients-list.component';
+import { PatientDetailsComponent } from './features/patients/patient-details.component';
 import { AppointmentsListComponent } from './features/appointments/appointments-list.component';
 import { SessionsListComponent } from './features/sessions/sessions-list.component';
 import { PrescriptionsListComponent } from './features/prescriptions/prescriptions-list.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: 'patients', pathMatch: 'full' },
   { path: 'patients', component: PatientsListComponent, canActivate: [AuthGuard] },
+  { path: 'patients/details/:id', component: PatientDetailsComponent, canActivate: [AuthGuard] },
   { path: 'appointments', component: AppointmentsListComponent, canActivate: [AuthGuard] },
   { path: 'sessions', component: SessionsListComponent, canActivate: [AuthGuard] },
   { path: 'prescriptions', component: PrescriptionsListComponent, canActivate: [AuthGuard] },
@@ -32,6 +34,7 @@ const routes: Routes = [
   { path: 'stock', component: StockListComponent, canActivate: [AuthGuard] },
   { path: 'store', component: StoreListComponent, canActivate: [AuthGuard] },
   { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
+
   { path: '**', redirectTo: 'login' }
 ];
 

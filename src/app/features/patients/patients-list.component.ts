@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { PatientService } from '../../core/services/patient.service';
-import { PatientDialogDialogComponent } from './patient-dialog.component';
 import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
@@ -35,7 +35,8 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
   constructor(
     private service: PatientService,
     private dialog: MatDialog,
-    private translation: TranslationService
+    private translation: TranslationService,
+    private router: Router
   ){}
 
   ngOnInit(){
@@ -122,7 +123,7 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
   // Open dialog at a fixed, centered width so it doesn't appear pinned to the bottom
   // and add an explicit top position and panelClass as robust fallbacks.
   openCreate(){
-    this.dialog.open(PatientDialogDialogComponent, {
+    this.dialog.open(null, {
       width: '900px',
       maxWidth: '900px',
       position: { top: '10vh' },
@@ -132,7 +133,7 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
   }
 
   openEdit(item: any){
-    this.dialog.open(PatientDialogDialogComponent, {
+    this.dialog.open(null, {
       width: '900px',
       maxWidth: '900px',
       position: { top: '10vh' },
@@ -141,15 +142,9 @@ export class PatientsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // new: open details dialog (read-only view)
+  // Redirect to the new patient details page
   openDetails(item: any){
-    this.dialog.open(PatientDialogDialogComponent, {
-      width: '900px',
-      maxWidth: '900px',
-      position: { top: '10vh' },
-      panelClass: 'patient-dialog-panel',
-      data: { mode: 'details', item }
-    });
+    this.router.navigate(['patients/details', item.id]);
   }
 
   delete(item: any){

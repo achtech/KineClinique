@@ -1,0 +1,49 @@
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.tabs button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.overview-tab {
+  background-color: #f9f9f9;
+}
+
+.seance-tab {
+  background-color: #e6f7ff;
+}
+
+.payment-tab {
+  background-color: #fff4e6;
+}
+
+.overview-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.overview-col {
+  flex: 1;
+  margin: 0 0.5rem;
+}
+
+.overview-input {
+  width: 100%;
+}

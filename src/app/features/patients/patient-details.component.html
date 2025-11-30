@@ -1,0 +1,134 @@
+<div class="tabs">
+  <button [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">Overview</button>
+  <button [class.active]="activeTab === 'seance'" (click)="setActiveTab('seance')">Seance</button>
+  <button [class.active]="activeTab === 'payment'" (click)="setActiveTab('payment')">Payment</button>
+</div>
+
+<div class="tab-content" [ngClass]="activeTab">
+<div *ngIf="activeTab === 'overview'" class="overview-tab">
+    <h2>Patient Overview</h2>
+    <div class="row">
+      <div class="col" *ngFor="let field of patientFields; let i = index">
+        <label>{{ field.label }}</label>
+        <input type="text" [value]="field.value" disabled />
+        <ng-container *ngIf="(i + 1) % 3 === 0">
+        </ng-container>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Patient:</label>
+          <span>{{ patient.firstName }} {{ patient.lastName }}</span>
+        </div>
+      </div>
+<div class="row overview-row">
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>First Name</mat-label>
+      <input matInput [value]="patient.firstName" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Last Name</mat-label>
+      <input matInput [value]="patient.lastName" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [value]="patient.dob" disabled />
+    </mat-form-field>
+  </div>
+</div>
+<div class="row overview-row">
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Address</mat-label>
+      <input matInput [value]="patient.address" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Phone</mat-label>
+      <input matInput [value]="patient.phone" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Email</mat-label>
+      <input matInput [value]="patient.email" disabled />
+    </mat-form-field>
+  </div>
+</div>
+<div class="row overview-row">
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Insurance Type</mat-label>
+      <input matInput [value]="patient.insuranceType" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Mutuelle Number</mat-label>
+      <input matInput [value]="patient.mutuelleNumber" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Doctor</mat-label>
+      <input matInput [value]="patient.doctor" disabled />
+    </mat-form-field>
+  </div>
+</div>
+<div class="row overview-row">
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Disease</mat-label>
+      <input matInput [value]="patient.disease" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Medical History</mat-label>
+      <input matInput [value]="patient.medicalHistory" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col overview-col">
+    <mat-form-field appearance="outline" class="overview-input">
+      <mat-label>Allergies</mat-label>
+      <input matInput [value]="patient.allergies?.join(', ')" disabled />
+    </mat-form-field>
+  </div>
+</div>
+    </div>
+  </div>
+  <div *ngIf="activeTab === 'seance'" class="seance-tab">
+    <h2>Seance</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Add seance data here -->
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="activeTab === 'payment'" class="payment-tab">
+    <h2>Payment</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Add payment data here -->
+      </tbody>
+    </table>
+  </div>
+</div>
