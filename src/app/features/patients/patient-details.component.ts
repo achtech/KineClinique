@@ -35,6 +35,10 @@ export class PatientDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {}
 
+  goBack(): void {
+    window.history.back();
+  }
+
   ngOnInit(): void {}
 
   setActiveTab(tab: string): void {
